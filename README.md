@@ -5,7 +5,12 @@ Run JSON Server
 json-server --watch db.json
 
 I used Material UI to make the interface it offers a wide variety of templates. The UI rn is ugly, my goal was only to implement the CRUD operations and the basic HTTP calls that are needed to communicate with the backend. The developers are named employees in the code. Overall the UI and the atrributes of Employee and Project objects are just there to help visualisation.
+
+I followed these videos: https://www.youtube.com/watch?v=q9lwBQRZaSI&list=PLZTETldyguF26ITg2XZykLIqWvvvtUhQz&index=8
+If u have issues with the setup, or want to understand how it works I'd advise u to check them out 
 # ITProjectFrontend
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
 
