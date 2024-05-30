@@ -1,0 +1,47 @@
+<div class="container">
+
+    <div align="right">
+      <button mat-flat-button class="m-2" color="accent" routerLink="/projects-list">Projects List</button>
+    </div>
+
+    <div class="card p-5 mt-2">
+
+        <form #projectForm="ngForm" (ngSubmit)="saveProject(projectForm)">
+        <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Demo Project" name="projectName" [(ngModel)]="project.projectName">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="In this project our goal was.." name="projectDescription" [(ngModel)]="project.description">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+          
+          <mat-form-field>
+            <mat-label>Project Leaders</mat-label>
+            <mat-select multiple [(value)]="project.projLeaders" (selectionChange)="onSelectionChange($event)">
+              <mat-option *ngFor="let lead of projLeaders" [value]="lead.employeeName">{{lead.employeeName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Developers</mat-label>
+            <mat-select multiple [(value)]="project.employees">
+              <mat-option *ngFor="let employee of employees" [value]="employee.employeeName">{{employee.employeeName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="text-center mt-3">
+            <button mat-flat-button class="m-2" color="accent">Save</button>
+            <button mat-stroked-button class="m-2" color="raised" (click)="onCancel()">Cancel</button>
+          </div>
+        
+        </form>
+    </div>
+</div>

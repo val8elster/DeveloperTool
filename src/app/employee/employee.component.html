@@ -1,0 +1,68 @@
+<div class="container">
+
+    <div align="right">
+      <button mat-flat-button class="m-2" color="accent" routerLink="/employee-list">Developers List</button>
+    </div>
+
+    <div class="card p-5 mt-2">
+        <form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
+        <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Yur Moam" name="employeeName" [(ngModel)]="employee.employeeName">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="example@gmail.com" name="employeeEmail" [(ngModel)]="employee.employeeEmail">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Address</mat-label>
+              <input matInput placeholder="0000, City, Street 01" name="employeeAddress" [(ngModel)]="employee.employeeAddress">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+
+          <Label>Project leader</Label>
+          <mat-radio-group aria-label="Project leader" name="projLead" [(ngModel)]="projLeadAsString">
+            <mat-radio-button   value='true'>Yes</mat-radio-button>
+            <mat-radio-button   value='false'>No</mat-radio-button>
+          </mat-radio-group>
+
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>employee Skills</mat-label>
+              <input matInput placeholder="employee Skills" name="employeeSkills" [(ngModel)]="employee.employeeSkills" disabled>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </p>
+
+          <section class="section1">
+            <mat-checkbox (change)="onSkillsChanges($event)" value="Angular" class="example-margin" [checked]="checkSkills('Angular')">Angular</mat-checkbox>
+            <mat-checkbox (change)="onSkillsChanges($event)" value="React" class="example-margin" [checked]="checkSkills('React')">React</mat-checkbox>
+          </section>
+          <mat-divider></mat-divider>
+          <section class="section2">
+            <mat-checkbox (change)="onSkillsChanges($event)" value="Django" class="example-margin" [checked]="checkSkills('Django')">Django</mat-checkbox>
+            <mat-checkbox (change)="onSkillsChanges($event)" value="Spring Boot" class="example-margin" [checked]="checkSkills('Spring Boot')">Spring Boot</mat-checkbox>
+          </section>
+          <mat-divider></mat-divider>          
+          <section class="section2">
+            <mat-checkbox (change)="onSkillsChanges($event)" value="MySQL" class="example-margin" [checked]="checkSkills('MySQL')">MySQL</mat-checkbox>
+            <mat-checkbox (change)="onSkillsChanges($event)" value="MongoDB" class="example-margin" [checked]="checkSkills('MongoDB')">MongoDB</mat-checkbox>
+          </section>
+          <mat-divider></mat-divider>
+          <div class="text-center mt-3">
+            <button mat-flat-button class="m-2" color="accent">Save</button>
+            <button mat-stroked-button class="m-2" color="raised" (click)="onCancel()">Cancel</button>
+          </div>
+        </form>
+    </div>
+</div>

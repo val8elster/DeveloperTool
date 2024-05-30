@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "projectName": "Project A",
+      "projLeadName": "Worker C",
+      "employees": [
+        "Worker C"
+      ],
+      "description": "Project to achieve objectives B",
+      "projLeaders": [
+        "Worker C"
+      ]
+    }
+  ],
+  "employees": [
+    {
+      "id": "3",
+      "employeeName": "Worker C",
+      "employeeAddress": "0001, City, Street 3",
+      "employeeEmail": "workerc@gmail.com",
+      "projLead": true,
+      "employeeSkills": "React,Spring Boot,React,MongoDB"
+    },
+    {
+      "id": 1,
+      "employeeName": "Worker E",
+      "employeeAddress": "0001, City, Street 6",
+      "employeeEmail": "workere@gmail.com",
+      "projLead": false,
+      "employeeSkills": "React,Django,MongoDB"
+    }
+  ]
+}
