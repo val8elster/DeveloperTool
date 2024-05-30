@@ -1,3 +1,10 @@
+Rn frontend uses json db to store data. 
+Install JSON Server:
+npm install -g json-server
+Run JSON Server
+json-server --watch db.json
+
+I used Material UI to make the interface it offers a wide variety of templates. The UI rn is ugly, my goal was only to implement the CRUD operations and the basic HTTP calls that are needed to communicate with the backend. The developers are named employees in the code. Overall the UI and the atrributes of Employee and Project objects are just there to help visualisation.
 # ITProjectFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
