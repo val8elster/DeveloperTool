@@ -1,8 +1,8 @@
-import { DarkModeDirective } from './dark-mode.directive';
+import { DarkModeService } from './dark-mode.service';
 
 describe('DarkModeDirective', () => {
   it('should create an instance', () => {
-    const directive = new DarkModeDirective();
+    const directive = new DarkModeService();
     expect(directive).toBeTruthy();
   });
 });
