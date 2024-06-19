@@ -23,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import {MatTableModule} from '@angular/material/table';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +51,8 @@ import {MatTableModule} from '@angular/material/table';
     MatCheckboxModule,
     MatDividerModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
