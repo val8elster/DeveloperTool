@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import {MatTableModule} from '@angular/material/table';
+import { DarkModeDirective } from './darkMode/dark-mode.directive';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatTableModule} from '@angular/material/table';
     EmployeeComponent,
     ProjectsComponent,
     EmployeeListComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    DarkModeDirective
   ],
   imports: [
     BrowserModule,
