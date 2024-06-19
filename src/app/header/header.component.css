@@ -1,0 +1,42 @@
+/* General toolbar styling */
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Style for the left-side icons and menu */
+  .example-icon {
+    margin-right: 16px;
+  }
+  
+  /* Spacer to push the right-side icons to the end */
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* Style for the right-side icons */
+  .favorite-icon {
+    color: red; /* Example color, you can change this */
+  }
+  
+  .favorite-icon, .example-icon {
+    margin-left: 8px;
+  }
+  slider-container {
+
+    display: inline-block;
+
+    vertical-align: middle;
+
+    width: 40px;
+
+    text-align: left;
+
+}
+
+.slider {
+
+    width: 100%;
+
+}
