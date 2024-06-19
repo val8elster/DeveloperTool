@@ -1,13 +1,10 @@
 
 <div class="container">
     <mat-grid-list cols="2" rowHeight="2:1" gutterSize="20">
-        <mat-grid-tile>
-            <img src="assets/img/worker_icon.jpg" style="cursor: pointer;" alt="Worker CRUD" routerLink="/worker">
+        <mat-grid-tile *ngFor="let project of projects">
+            <h2>{{ project.projectName}}</h2>
+            <p>Workers: {{project.employees.join(', ')}}</p>
+            <p>Project Leader: {{ project.projLeaders }}</p>
         </mat-grid-tile>
-        <mat-grid-tile>
-            <img src="assets/img/project_icon.png" style="cursor: pointer;" alt="Project CRUD" routerLink="/projects">
-        </mat-grid-tile>
-        <mat-grid-tile>3</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
     </mat-grid-list>    
 </div>
