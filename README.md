@@ -1,6 +1,7 @@
 Rn frontend uses json db to store data. 
 Install JSON Server:
 npm install -g json-server
+
 Run JSON Server
 json-server --watch db.json
 
@@ -8,6 +9,8 @@ I used Material UI to make the interface it offers a wide variety of templates. 
 
 I followed these videos: https://www.youtube.com/watch?v=q9lwBQRZaSI&list=PLZTETldyguF26ITg2XZykLIqWvvvtUhQz&index=8
 If u have issues with the setup, or want to understand how it works I'd advise u to check them out 
+
+
 # ITProjectFrontend
 
 
