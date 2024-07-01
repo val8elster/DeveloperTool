@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../services/employee/employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectService } from '../services/project/project.service';
+import { Project } from '../models/project_model';
 
 @Component({
   selector: 'app-employee',
@@ -17,19 +19,21 @@ export class EmployeeComponent implements OnInit {
 
   static lastId = 0;
 
+  projects: Project[] = [];
   employee: any;
+  employees: Employee[] = [];
 
   skills: string[] = [];
 
   constructor(private employeeService: EmployeeService, private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute, private projectService: ProjectService
   ) {
 
   }
 
   ngOnInit(): void {
     this.employee = this.activatedRoute.snapshot.data['employees'];
-
+    this.getEmployees();
     console.log(this.employee)
 
     if (this.employee && this.employee.id > 0) {
@@ -37,6 +41,10 @@ export class EmployeeComponent implements OnInit {
     } else {
       this.isCreateEmployee;
     }
+  }
+
+  getLastId(): number {
+    return this.employees.length;
   }
 
   checkSkills(skills: string) {
@@ -47,11 +55,19 @@ export class EmployeeComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  getEmployees(): void {
+    this.employeeService.getEmployees().subscribe(
+      employees => {
+        this.employees = employees;
+      },
+      error => console.error(error)
+    );
+  }
+
   saveEmployee(employeeForm: NgForm): void {
 
     if (this.isCreateEmployee) {
-      EmployeeComponent.lastId++;
-      this.employee.id = EmployeeComponent.lastId;
+      this.employee.id = this.getLastId() + 1;
 
       this.employeeService.saveEmployee(this.employee).subscribe(
         {
@@ -90,7 +106,7 @@ export class EmployeeComponent implements OnInit {
       this.employee.projLead = false;
     }
   }
-
+  
   onSkillsChanges(event: any): void {
     console.log(event)
     if (event.checked) {

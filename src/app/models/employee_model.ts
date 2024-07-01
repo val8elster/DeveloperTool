@@ -1,8 +1,11 @@
+import { Project } from "./project_model"
+
 export interface Employee{
  id: number,
  employeeName: string,
- employeeAddress: string,
  employeeEmail: string,
-    projLead: boolean,
- employeeSkills: string
+ projLead: boolean,
+ employeeSkills: string,
+ level: number
+ projects: Project[]
 }
