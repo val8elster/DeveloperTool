@@ -1,4 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+    background-color: #7cfd04;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color:#e91e63;
+  }
+  
+  /* Global box-sizing */
+  * {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Set the overall container to use flexbox */
+  app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the container takes the full viewport height */
+  }
+  
+  body {
+    background-color: #f116c2;
+    color: #7cfd04;
+  }
+  
+  /* Styles für Dark Mode */
+  body.dark-theme {
+    background-color: #333333;
+    color: #ffffff;
+  }
+  
+  
