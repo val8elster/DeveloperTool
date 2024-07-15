@@ -10,7 +10,5 @@ import { MessagesService } from './services/messages.service';
 export class AppComponent {
   messages: string[] = [];
 
-  
-
-  title = 'IT-project-frontend';
+  title = 'Developer Tool';
 }

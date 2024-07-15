@@ -25,6 +25,7 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatPaginatorModule} from "@angular/material/paginator";
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatTableModule,
     MatSlideToggleModule,
     MatExpansionModule,
-    EmployeeComponent
+    EmployeeComponent,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

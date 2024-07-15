@@ -4,6 +4,7 @@ import { Skill, Employee } from '../models/employee.model';
 import {EmployeeService} from "../services/employee/employee.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {catchError, forkJoin, switchMap} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-employee',
@@ -23,7 +24,7 @@ export class EmployeeComponent {
   alertMessage: string | null = "";
   suc: boolean = true;
 
-  constructor(private fb: FormBuilder, private employeeService: EmployeeService) {
+  constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: Router) {
     this.employeeForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -75,5 +76,9 @@ export class EmployeeComponent {
         }
       );
     }
+  }
+
+  onNavigate() {
+    this.router.navigate(['/employee-list']);
   }
 }
