@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators, FormArray, FormsModule, ReactiveForm
 import { Skill, Employee } from '../models/employee.model';
 import {EmployeeService} from "../services/employee/employee.service";
 import {NgForOf, NgIf} from "@angular/common";
-import {forkJoin, switchMap} from "rxjs";
+import {catchError, forkJoin, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-employee',
@@ -38,35 +38,42 @@ export class EmployeeComponent {
 
   onSubmit() {
     if (this.employeeForm.valid) {
-      let name = this.employeeForm.value.name;
-      let email = this.employeeForm.value.email;
-      let password = this.employeeForm.value.password;
+      const { name, email, password } = this.employeeForm.value;
 
-      if(this.employeeService.existsByUsername(name)) {
-        this.alertMessage += "Username already in use "
-        this.suc = false
-      }
-      if(this.employeeService.existsByMail(email)) {
-        this.alertMessage += "Email already in use "
-        this.suc = false
-      }
-
-      const selectedSkills = this.employeeForm.value.skills
-        .map((checked: any, i: number) => checked ? this.skills[i] : null)
-        .filter((v: null) => v !== null);
-
-      let e = new Employee(name, email, password, selectedSkills);
-
-      if(this.suc){
-        this.employeeService.saveEmployee(e).subscribe(
-          employee => {
-            this.alertMessage = 'Registration successful!';
-          },
-          error => {
-            this.alertMessage = "Error registering: " + error.message
+      forkJoin({
+        usernameExists: this.employeeService.existsByUsername(name),
+        emailExists: this.employeeService.existsByMail(email)
+      }).pipe(
+        switchMap(results => {
+          if (results.usernameExists) {
+            throw new Error('Username already exists');
           }
-        );
-      }
+          if (results.emailExists) {
+            throw new Error('Email already exists');
+          }
+
+          const selectedSkills = this.employeeForm.value.skills
+            .map((checked: any, i: number) => checked ? this.skills[i] : null)
+            .filter((v: null) => v !== null);
+
+          let e = new Employee(name, email, password, selectedSkills);
+
+          return this.employeeService.saveEmployee(e);
+        }),
+        //@ts-ignore
+        catchError(error => {
+          this.alertMessage = error.message;
+          return null;
+        })
+      ).subscribe(
+        employee => {
+          this.alertMessage = 'Registration successful!';
+          console.log('Employee saved:', employee);
+        },
+        error => {
+          console.error('Error:', error);
+        }
+      );
     }
   }
 }

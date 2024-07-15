@@ -26,11 +26,11 @@ export class EmployeeService {
   }
 
   existsByMail(mail: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/exists/${mail}`);
+    return this.http.get<boolean>(`${this.baseUrl}/exists/mail/${mail}`);
   }
 
   existsByUsername(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/exists/${username}`);
+    return this.http.get<boolean>(`${this.baseUrl}/exists/name/${username}`);
   }
 
   getLeadersProject(employeeId: number): Observable<Project> {
