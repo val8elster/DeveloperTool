@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from '../models/project_model'
+import { Project } from '../models/project.model'
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../services/project/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Employee } from '../models/employee_model';
+import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../services/employee/employee.service';
 import { MatSelectChange } from '@angular/material/select';
 
@@ -43,7 +43,7 @@ export class ProjectsComponent implements OnInit {
 
   getLastId(): number {
     return this.projects.length;
-    
+
   }
 
   getProjects(): void {
@@ -64,14 +64,9 @@ export class ProjectsComponent implements OnInit {
     this.employeeService.getEmployees().subscribe(
       employees => {
         this.employees = employees;
-        this.getProjLeaders();
       },
       error => console.error(error)
     );
-  }
-
-  getProjLeaders(): void {
-    this.projLeaders = this.employees.filter(employee => employee.projLead);
   }
 
   onCancel(): void {
@@ -80,24 +75,24 @@ export class ProjectsComponent implements OnInit {
 
   onSelectionChangeProjLead(event: MatSelectChange) {
     // Assuming project.projLeadName should store a list of names, not just one
-    this.project.projLeadName = event.value.map((employee: Employee) => employee.employeeName).join(', ');
+    this.project.projLeadName = event.value.map((employee: Employee) => employee.name).join(', ');
   }
 
   saveProject(projectForm: NgForm): void {
-    
+
     if (this.isCreateProject) {
       this.project.id = this.getLastId() + 1;
 
       this.projectService.saveProject(this.project).subscribe(
         {
           next: (res: Project) => {
-            
+
             console.log(res);
             /*this.employeeService.updateEmployeeProjects(this.project.employees, this.project)*/
             projectForm.reset();
             this.employees = [];
             this.projLeaders = [];
-            
+
           },
           error: (err: HttpErrorResponse) => {
             console.log(err);

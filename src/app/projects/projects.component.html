@@ -22,18 +22,18 @@
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             </mat-form-field>
           </p>
-          
+
           <mat-form-field>
             <mat-label>Project Leaders</mat-label>
             <mat-select multiple [(value)]="project.projLeaders" (selectionChange)="onSelectionChangeProjLead($event)">
-              <mat-option *ngFor="let lead of projLeaders" [value]="lead">{{lead.employeeName}}</mat-option>
+              <mat-option *ngFor="let lead of projLeaders" [value]="lead">{{lead.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Developers</mat-label>
             <mat-select multiple [(value)]="project.employees">
-              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.employeeName}}</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -41,7 +41,7 @@
             <button mat-flat-button class="m-2" color="accent">Save</button>
             <button mat-stroked-button class="m-2" color="raised" (click)="onCancel()">Cancel</button>
           </div>
-        
+
         </form>
     </div>
 </div>

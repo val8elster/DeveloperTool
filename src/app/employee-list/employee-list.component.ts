@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../services/employee/employee.service';
-import { Employee } from '../models/employee_model';
+import { Employee } from '../models/employee.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project/project.service';
-import { Project } from '../models/project_model';
+import { Project } from '../models/project.model';
 
 @Component({
   selector: 'app-employee-list',
@@ -19,11 +19,11 @@ export class EmployeeListComponent implements OnInit {
   projects: Project[] = [];
   constructor(private employeeService: EmployeeService, private router: Router, private projectService : ProjectService){
     this.getEmployees();
-    
+
   }
 
   ngOnInit(): void {
-    
+
   }
 
   getProjectsForEmployee(employee: Employee) {
@@ -44,9 +44,9 @@ export class EmployeeListComponent implements OnInit {
         }
       }
     );
-  } 
+  }
 
-  deleteEmployees(employeeId: Number): void {
+  deleteEmployees(employeeId: number): void {
     console.log(employeeId);
     this.employeeService.deleteEmployee(employeeId).subscribe(
       {
@@ -61,7 +61,7 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
-  updateEmployees(employeeId: Number): void {
+  updateEmployees(employeeId: number): void {
     this.router.navigate(['/employee', {id: employeeId}]);
   }
 }

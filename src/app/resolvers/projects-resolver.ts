@@ -2,9 +2,9 @@ import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from "@angular
 import { inject } from "@angular/core"
 import { ProjectService } from "../services/project/project.service"
 import { Observable, of } from "rxjs"
-import { Project } from "../models/project_model"
+import { Project } from "../models/project.model"
 
-export const ProjectResolver: ResolveFn<any> = 
+export const ProjectResolver: ResolveFn<any> =
     (route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot,
         projectsService: ProjectService = inject(ProjectService)) : Observable<Project> => {
@@ -14,16 +14,13 @@ export const ProjectResolver: ResolveFn<any> =
             }else {
                 const project: Project = {
                     id: 0,
-                    projectName: '',
-                    projLeadName: '',
-                    employees: [],
+                    name: '',
+                    leaderId: 0,
+                    collaborators: [],
                     description: '',
-                    projLeaders: []
+                    completed: false,
+                    requiredSkills: []
                   }
-
                   return of(project);
             }
-
-            
         }
-    

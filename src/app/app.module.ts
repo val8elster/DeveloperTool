@@ -30,7 +30,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    EmployeeComponent,
     ProjectsComponent,
     EmployeeListComponent,
     ProjectListComponent
@@ -54,7 +53,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSelectModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    EmployeeComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

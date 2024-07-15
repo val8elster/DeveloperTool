@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project } from '../../models/project_model';
+import { Project } from '../../models/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { Project } from '../../models/project_model';
 export class ProjectService {
 
   constructor(private httpClient: HttpClient) {}
-    
+
   api = "http://localhost:3000/projects"
 
   public saveProject(project: Project) : Observable<Project>{

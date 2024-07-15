@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../services/project/project.service';
-import { Project } from '../models/project_model';
+import { Project } from '../models/project.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class ProjectListComponent {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   getProjects(): void {

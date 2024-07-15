@@ -1,125 +1,72 @@
-import { Component, OnInit } from '@angular/core';
-import { Employee } from '../models/employee_model';
-import { NgForm } from '@angular/forms';
-import { EmployeeService } from '../services/employee/employee.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProjectService } from '../services/project/project.service';
-import { Project } from '../models/project_model';
+import { Component } from '@angular/core';
+import {FormBuilder, FormGroup, Validators, FormArray, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Skill, Employee } from '../models/employee.model';
+import {EmployeeService} from "../services/employee/employee.service";
+import {NgForOf, NgIf} from "@angular/common";
+import {forkJoin, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    NgIf,
+    ReactiveFormsModule,
+    NgForOf
+  ],
   styleUrls: ['./employee.component.css']
 })
+export class EmployeeComponent {
+  employeeForm: FormGroup;
+  skills = Object.values(Skill);
+  alertMessage: string | null = "";
+  suc: boolean = true;
 
-export class EmployeeComponent implements OnInit {
-
-  isCreateEmployee: boolean = true;
-
-  static lastId = 0;
-
-  projects: Project[] = [];
-  employee: any;
-  employees: Employee[] = [];
-
-  skills: string[] = [];
-
-  constructor(private employeeService: EmployeeService, private router: Router,
-    private activatedRoute: ActivatedRoute, private projectService: ProjectService
-  ) {
-
+  constructor(private fb: FormBuilder, private employeeService: EmployeeService) {
+    this.employeeForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      skills: this.fb.array(this.skills.map(skill => this.fb.control(false)))
+    });
   }
 
-  ngOnInit(): void {
-    this.employee = this.activatedRoute.snapshot.data['employees'];
-    this.getEmployees();
-    console.log(this.employee)
-
-    if (this.employee && this.employee.id > 0) {
-      this.isCreateEmployee = false;
-    } else {
-      this.isCreateEmployee;
-    }
+  get skillsFormArray() {
+    return this.employeeForm.get('skills') as FormArray;
   }
 
-  getLastId(): number {
-    return this.employees.length;
-  }
+  onSubmit() {
+    if (this.employeeForm.valid) {
+      let name = this.employeeForm.value.name;
+      let email = this.employeeForm.value.email;
+      let password = this.employeeForm.value.password;
 
-  checkSkills(skills: string) {
-    return this.employee.employeeSkills != null && this.employee.employeeSkills.includes(skills);
-  }
+      if(this.employeeService.existsByUsername(name)) {
+        this.alertMessage += "Username already in use "
+        this.suc = false
+      }
+      if(this.employeeService.existsByMail(email)) {
+        this.alertMessage += "Email already in use "
+        this.suc = false
+      }
 
-  onCancel(): void {
-    this.router.navigate(['/']);
-  }
+      const selectedSkills = this.employeeForm.value.skills
+        .map((checked: any, i: number) => checked ? this.skills[i] : null)
+        .filter((v: null) => v !== null);
 
-  getEmployees(): void {
-    this.employeeService.getEmployees().subscribe(
-      employees => {
-        this.employees = employees;
-      },
-      error => console.error(error)
-    );
-  }
+      let e = new Employee(name, email, password, selectedSkills);
 
-  saveEmployee(employeeForm: NgForm): void {
-
-    if (this.isCreateEmployee) {
-      this.employee.id = this.getLastId() + 1;
-
-      this.employeeService.saveEmployee(this.employee).subscribe(
-        {
-          next: (res: Employee) => {
-            console.log(res);
-            employeeForm.reset();
+      if(this.suc){
+        this.employeeService.saveEmployee(e).subscribe(
+          employee => {
+            this.alertMessage = 'Registration successful!';
           },
-          error: (err: HttpErrorResponse) => {
-            console.log(err);
+          error => {
+            this.alertMessage = "Error registering: " + error.message
           }
-        }
-      );
-    } else{
-      this.employeeService.updateEmployee(this.employee, this.employee.id).subscribe(
-        {
-          next: (res: Employee) => {
-            this.router.navigate(["/employee-list"]);
-          },
-          error: (err: HttpErrorResponse) => {
-            console.log(err);
-          }
-        }
-      )
+        );
+      }
     }
-
-  }
-
-  get projLeadAsString(): string {
-    return this.employee.projLead.toString();
-  }
-
-  set projLeadAsString(value: string) {
-    if (value === 'true') {
-      this.employee.projLead = true;
-    } else {
-      this.employee.projLead = false;
-    }
-  }
-  
-  onSkillsChanges(event: any): void {
-    console.log(event)
-    if (event.checked) {
-      this.skills.push(event.source.value)
-    } else {
-      this.skills.forEach(
-        (item, index) => {
-          if (item == event.source.value) {
-            this.skills.splice(index, 1);
-          }
-        }
-      );
-    }
-    this.employee.employeeSkills = this.skills.toString();
   }
 }
