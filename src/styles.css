@@ -4,11 +4,13 @@
   --box-color: #8A2BE2;
   --background-color: #B5D7F5;
   --text-color: black;
+  --highlight: white;
 }
 .dark-theme{
   --background-color: #131415;
-  --box-color: #4f4c4c;
+  --box-color: #2B2C31;
   --text-color: white;
+  --highlight: #4f4c4c;
 }
 
 html, body {
@@ -47,8 +49,8 @@ html, body {
   
   /* Styles für Dark Mode */
   body.dark-theme {
-    background-color: --;
-    color: #12D91A;
+    background-color: var(--background-color);
+    color: var(--text-color);
   }
   
   

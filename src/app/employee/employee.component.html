@@ -8,7 +8,7 @@
         <form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
         <p>
             <mat-form-field appearance="outline">
-              <mat-label>Name</mat-label>
+              <mat-label class="text">Name</mat-label>
               <input matInput placeholder="Yur Moam" name="employeeName" [(ngModel)]="employee.employeeName">
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             </mat-form-field>
@@ -16,13 +16,13 @@
 
           <p>
             <mat-form-field appearance="outline">
-              <mat-label>Email</mat-label>
+              <mat-label class="text">Email</mat-label>
               <input matInput placeholder="example@gmail.com" name="employeeEmail" [(ngModel)]="employee.employeeEmail">
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             </mat-form-field>
           </p>
 
-          <Label>Project leader</Label>
+          <Label class="text">Project leader</Label>
           <mat-radio-group aria-label="Project leader" name="projLead" [(ngModel)]="projLeadAsString">
             <mat-radio-button   value='true'>Yes</mat-radio-button>
             <mat-radio-button   value='false'>No</mat-radio-button>
@@ -30,7 +30,7 @@
 
           <p>
             <mat-form-field appearance="outline">
-              <mat-label>employee Skills</mat-label>
+              <mat-label class="text">employee Skills</mat-label>
               <input matInput placeholder="employee Skills" name="employeeSkills" [(ngModel)]="employee.employeeSkills" disabled>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             </mat-form-field>

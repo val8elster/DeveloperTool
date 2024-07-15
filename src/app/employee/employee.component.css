@@ -13,5 +13,15 @@ mat-form-field{
     width: 100%;
 }
 .container{
-    background-color: blueviolet;
+    background-color: var(--background-color);
+}
+
+body.dark-theme .container{
+    background-color: var(--background-color);
+}
+body.dark-theme .text{
+    color: var(--text-color);
+}
+body.dark-theme .example-margin{
+    color: var(--text-color);
 }
