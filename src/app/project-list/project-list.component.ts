@@ -23,7 +23,7 @@ export class ProjectListComponent {
   }
 
   getProjects(): void {
-    this.projectService.getProjects().subscribe(
+    this.projectService.getAllProjects().subscribe(
       {
         next: (res: Project[]) => {
           this.dataSource = res;
@@ -36,13 +36,13 @@ export class ProjectListComponent {
     )
   }
 
-  updateProject(projectId: Number): void {
+  updateProject(projectId: number): void {
     this.router.navigate(['/projects', {id: projectId}])
   }
 
-  deleteProject(projectId: Number): void{
+  deleteProject(projectId: number): void{
     console.log(projectId);
-    this.projectService.deleteProjects(projectId).subscribe(
+    this.projectService.deleteProject(projectId).subscribe(
       {
         next: (res) => {
           console.log(res);

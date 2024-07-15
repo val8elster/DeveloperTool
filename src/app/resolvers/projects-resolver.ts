@@ -10,7 +10,7 @@ export const ProjectResolver: ResolveFn<any> =
         projectsService: ProjectService = inject(ProjectService)) : Observable<Project> => {
             const projectId = route.paramMap.get("id");
             if(projectId){
-                return projectsService.getProject(Number(projectId));
+                return projectsService.getProjectById(Number(projectId));
             }else {
                 const project: Project = {
                     id: 0,

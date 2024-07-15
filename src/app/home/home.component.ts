@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   readonly panelOpenState = signal(false);
   ngOnInit() {
-    this.projectService.getProjects().subscribe(data => {
+    this.projectService.getAllProjects().subscribe(data => {
       this.projects = data;
     });
   }

@@ -80,7 +80,6 @@ export class EmployeeService {
     );
   }
 
-
   findMaxId(employees: Employee[]): number {
     return employees.reduce((max, employee) => (employee.id > max ? employee.id : max), employees[0]?.id ?? 0);
   }

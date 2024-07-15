@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatDividerModule} from '@angular/material/divider';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { ProjectListComponent } from './project-list/project-list.component';
@@ -26,6 +26,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {ProjectService} from "./services/project/project.service";
+import {AuthService} from "./services/auth.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +38,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     HomeComponent,
     ProjectsComponent,
     EmployeeListComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    AuthDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -56,9 +62,12 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatSlideToggleModule,
     MatExpansionModule,
     EmployeeComponent,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatDialogModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ProjectService, AuthService],
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
