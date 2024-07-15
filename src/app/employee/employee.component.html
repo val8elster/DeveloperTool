@@ -22,14 +22,6 @@
             </mat-form-field>
           </p>
 
-          <p>
-            <mat-form-field appearance="outline">
-              <mat-label>Address</mat-label>
-              <input matInput placeholder="0000, City, Street 01" name="employeeAddress" [(ngModel)]="employee.employeeAddress">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-
           <Label>Project leader</Label>
           <mat-radio-group aria-label="Project leader" name="projLead" [(ngModel)]="projLeadAsString">
             <mat-radio-button   value='true'>Yes</mat-radio-button>
@@ -63,6 +55,9 @@
             <button mat-flat-button class="m-2" color="accent">Save</button>
             <button mat-stroked-button class="m-2" color="raised" (click)="onCancel()">Cancel</button>
           </div>
+
+          
+
         </form>
     </div>
 </div>

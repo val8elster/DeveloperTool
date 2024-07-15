@@ -15,10 +15,11 @@ export const EmployeeResolver: ResolveFn<any> = (
             const employee: Employee = {
                 id: 0,
                 employeeName: '',
-                employeeAddress: '',
                 employeeEmail: '',
                 projLead: false,
-                employeeSkills: ''
+                employeeSkills: '',
+                level: 0,
+                projects: []
               }
 
               return of(employee);

@@ -1,10 +1,25 @@
 
 <div class="container">
-    <mat-grid-list cols="2" rowHeight="2:1" gutterSize="20">
+    <mat-grid-list cols="2" rowHeight="2:1" gutterSize="50">
         <mat-grid-tile *ngFor="let project of projects">
-            <h2>{{ project.projectName}}</h2>
-            <p>Workers: {{project.employees.join(', ')}}</p>
-            <p>Project Leader: {{ project.projLeaders }}</p>
+            <div class="grid-container">
+                <div class="project-name-label">Project Name:</div>
+                <div class="project-name">{{ project.projectName }}</div>
+                <div class="workers-label">Workers:</div>
+                <div class="workers">{{ getEmployeeNames(project.employees) }}</div>
+                <div class="lead-label">Project Leader:</div>
+                <div class="lead">{{ project.projLeadName }}</div>
+                <div class="description" [class.expanded]="panelOpenState">
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title> Description </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <p>{{project.description}}</p>
+                        </mat-expansion-panel>
+                      </mat-accordion>  
+                </div>
+            </div>
         </mat-grid-tile>
     </mat-grid-list>    
 </div>

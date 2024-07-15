@@ -19,11 +19,9 @@ export class ProjectsComponent implements OnInit {
 
   project: any;
 
-  static lastId = 0;
-
   employees: Employee[] = [];
   projLeaders: Employee[] = [];
-
+  projects: Project[] = [];
   constructor(private projectService: ProjectService, private router: Router,
     private employeeService: EmployeeService, private activatedRoute: ActivatedRoute) {
 
@@ -31,6 +29,7 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployees();
+    this.getProjects();
     this.project = this.activatedRoute.snapshot.data['project'];
 
     console.log(this.project)
@@ -40,6 +39,25 @@ export class ProjectsComponent implements OnInit {
     } else {
       this.isCreateProject;
     }
+  }
+
+  getLastId(): number {
+    return this.projects.length;
+    
+  }
+
+  getProjects(): void {
+    this.projectService.getProjects().subscribe(
+      {
+        next: (res: Project[]) => {
+          this.projects = res;
+          console.log(res)
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err)
+        }
+      }
+    )
   }
 
   getEmployees(): void {
@@ -60,23 +78,26 @@ export class ProjectsComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  onSelectionChange(event: MatSelectChange) {
-    this.project.projLeadName = event.value.join(', ');
+  onSelectionChangeProjLead(event: MatSelectChange) {
+    // Assuming project.projLeadName should store a list of names, not just one
+    this.project.projLeadName = event.value.map((employee: Employee) => employee.employeeName).join(', ');
   }
 
   saveProject(projectForm: NgForm): void {
-
+    
     if (this.isCreateProject) {
-      ProjectsComponent.lastId++;
-      this.project.id = ProjectsComponent.lastId;
+      this.project.id = this.getLastId() + 1;
 
       this.projectService.saveProject(this.project).subscribe(
         {
           next: (res: Project) => {
+            
             console.log(res);
+            /*this.employeeService.updateEmployeeProjects(this.project.employees, this.project)*/
             projectForm.reset();
             this.employees = [];
             this.projLeaders = [];
+            
           },
           error: (err: HttpErrorResponse) => {
             console.log(err);
@@ -84,7 +105,7 @@ export class ProjectsComponent implements OnInit {
         }
       );
     } else {
-      this.projectService.updateProject(this.project, this.project.id).subscribe(
+        this.projectService.updateProject(this.project, this.project.id).subscribe(
         {
           next: (res: Project) => {
             this.router.navigate(["/projects-list"]);

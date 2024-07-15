@@ -25,15 +25,15 @@
           
           <mat-form-field>
             <mat-label>Project Leaders</mat-label>
-            <mat-select multiple [(value)]="project.projLeaders" (selectionChange)="onSelectionChange($event)">
-              <mat-option *ngFor="let lead of projLeaders" [value]="lead.employeeName">{{lead.employeeName}}</mat-option>
+            <mat-select multiple [(value)]="project.projLeaders" (selectionChange)="onSelectionChangeProjLead($event)">
+              <mat-option *ngFor="let lead of projLeaders" [value]="lead">{{lead.employeeName}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Developers</mat-label>
             <mat-select multiple [(value)]="project.employees">
-              <mat-option *ngFor="let employee of employees" [value]="employee.employeeName">{{employee.employeeName}}</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.employeeName}}</mat-option>
             </mat-select>
           </mat-form-field>
 

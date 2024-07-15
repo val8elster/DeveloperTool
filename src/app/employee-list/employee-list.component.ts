@@ -3,6 +3,8 @@ import { EmployeeService } from '../services/employee/employee.service';
 import { Employee } from '../models/employee_model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ProjectService } from '../services/project/project.service';
+import { Project } from '../models/project_model';
 
 @Component({
   selector: 'app-employee-list',
@@ -11,22 +13,30 @@ import { Router } from '@angular/router';
 })
 export class EmployeeListComponent implements OnInit {
 
-  dataSource : Employee[] = [];
-  displayedColumns: string[] = ['employeeId', 'employeeName', 'employeeAddress', 'employeeEmail', 'projLead', 'employeeSkills', 'edit', 'delete'];
-
-  constructor(private employeeService: EmployeeService, private router: Router){
+  dataSourceEmp : Employee[] = [];
+  dataSourceProj : Project[] = [];
+  displayedColumns: string[] = ['employeeId', 'employeeName', 'projects', 'employeeEmail', 'projLead', 'employeeSkills', 'edit', 'delete'];
+  projects: Project[] = [];
+  constructor(private employeeService: EmployeeService, private router: Router, private projectService : ProjectService){
     this.getEmployees();
+    
   }
 
   ngOnInit(): void {
     
   }
 
+  getProjectsForEmployee(employee: Employee) {
+    this.projectService.getProjects().subscribe((projects: any[]) => {
+      this.projects = projects.filter(project => project.employees.employee.id == employee.id);
+    });
+  }
+
   getEmployees(): void{
     this.employeeService.getEmployees().subscribe(
       {
         next: (res: Employee[]) => {
-          this.dataSource = res;
+          this.dataSourceEmp = res;
           console.log(res)
         },
         error: (err: HttpErrorResponse) => {
