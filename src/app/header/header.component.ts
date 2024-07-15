@@ -26,6 +26,7 @@ export class HeaderComponent  {
 
   // Optional: Wenn du das initiale Thema laden möchtest
   ngOnInit(): void {
+    this.isLightTheme = document.body.classList.contains('light-theme');
     this.applyTheme();
   }
 }
