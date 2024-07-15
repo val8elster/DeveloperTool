@@ -1,3 +1,6 @@
 .container {
-    background-color: greenyellow;
+    background-color: B5D7F5;
+  }
+  .container.dark-theme{
+    background-color: 2B2C31;
   }

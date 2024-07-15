@@ -13,7 +13,7 @@
       ]
     },
     {
-      "id": 1,
+      "id": "1",
       "projectName": "Project B",
       "projLeadName": "Worker C",
       "employees": [
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "id": 1,
+      "id": "1",
       "projectName": "Project C",
       "projLeadName": "Worker C",
       "employees": [
@@ -44,7 +44,7 @@
       "employeeAddress": "0001, City, Street 3",
       "employeeEmail": "workerc@gmail.com",
       "projLead": true,
-      "employeeSkills": "React,Spring Boot,React,MongoDB"
+      "employeeSkills": "Django,React,Spring Boot,MongoDB"
     },
     {
       "id": "1",
@@ -55,7 +55,7 @@
       "employeeSkills": "React,Django,MongoDB"
     },
     {
-      "id": 1,
+      "id": "1",
       "employeeName": "Worker B",
       "employeeAddress": "0001, City, Street 4",
       "employeeEmail": "workerb@gmail.com",
