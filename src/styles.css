@@ -1,14 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --box-color: #8A2BE2;
+  --background-color: #B5D7F5;
+  --text-color: black;
+}
+.dark-theme{
+  --background-color: #131415;
+  --box-color: #4f4c4c;
+  --text-color: white;
+}
+
 html, body {
     height: 100%;
-    background-color: #7cfd04;
+    background-color: var(--background-color);
   }
   
   body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    color:#e91e63;
+    color:var(--text-color);
   }
   
   /* Global box-sizing */
@@ -32,15 +43,12 @@ html, body {
     min-height: 100vh; /* Ensure the container takes the full viewport height */
   }
   
-  body {
-    background-color: #f116c2;
-    color: #7cfd04;
-  }
+
   
   /* Styles für Dark Mode */
   body.dark-theme {
-    background-color: #333333;
-    color: #ffffff;
+    background-color: --;
+    color: #12D91A;
   }
   
   

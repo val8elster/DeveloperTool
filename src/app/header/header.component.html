@@ -1,5 +1,5 @@
 <p>
-  <mat-toolbar color="primary" >
+  <mat-toolbar color="primary" class="header.container" >
       <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
       </button>
@@ -17,7 +17,9 @@
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>share</mat-icon>
     </button>
-
+    <div class="slider-container">
+      <input type="range" min="0" max="1" step="1" [value]="isLightTheme ? 1 : 0" class="slider" id="myRange" (change)="onThemeSwitchChange($event)">
+    </div>
     
 
   </mat-toolbar></p>

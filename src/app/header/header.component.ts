@@ -1,33 +1,27 @@
+// header.component.ts
 
-import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-header',
-  styleUrls: ['./header.component.css'],
-  templateUrl: 'header.component.html'
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent  {
+export class HeaderComponent implements OnInit {
   isLightTheme = true;
+
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit(): void {
+    this.themeService.loadTheme(); // Load saved theme preference
+    this.themeService.isLightTheme$.subscribe(isLight => {
+      this.isLightTheme = isLight; // Update theme switch state
+    });
+  }
 
   onThemeSwitchChange(event: any): void {
     this.isLightTheme = event.target.value === '1';
-    this.applyTheme();
-  }
-
-  applyTheme(): void {
-    if (this.isLightTheme) {
-      document.body.classList.add('light-theme');
-      document.body.classList.remove('dark-theme');
-    } else {
-      document.body.classList.add('dark-theme');
-      document.body.classList.remove('light-theme');
-    }
-  }
-
-  // Optional: Wenn du das initiale Thema laden möchtest
-  ngOnInit(): void {
-    this.isLightTheme = document.body.classList.contains('light-theme');
-    this.applyTheme();
+    this.themeService.setLightTheme(this.isLightTheme); // Update theme based on slider input
   }
 }
-

@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../services/project/project.service';
 import { Project } from '../models/project_model';
 import { Router } from '@angular/router';
-
+import { ThemeService } from '../services/theme.service';
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',

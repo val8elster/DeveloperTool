@@ -53,7 +53,20 @@
 .workers { grid-area: 2 / 2 / 3 / 3; }
 .lead { grid-area: 3 / 2 / 4 / 3; }
 
-.container.dark-theme{
-  background-color: 2B2C31;
-  
+body.dark-theme .grid-container{
+  background-color: #4F4C4C;
+}
+body.dark-theme .description *{
+  background-color: #4F4C4C;
+  color:#12D91A;
+}
+body.dark-theme .project-name, 
+body.dark-theme .workers, 
+body.dark-theme .lead {
+  color: #12D91A;
+}
+body.dark-theme .project-name-label, 
+body.dark-theme .workers-label,
+body.dark-theme .lead-label{
+  color: #12D91A;
 }
