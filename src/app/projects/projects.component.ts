@@ -3,8 +3,11 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectService } from '../services/project/project.service';
 import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
-import {Skill} from "../models/employee.model";
+import {Employee, Skill} from "../models/employee.model";
 import {Project} from "../models/project.model";
+import { Router } from '@angular/router';
+import { catchError, forkJoin, switchMap } from 'rxjs';
+import { EmployeeService } from '../services/employee/employee.service';
 
 @Component({
   selector: 'app-projects',
@@ -14,11 +17,15 @@ import {Project} from "../models/project.model";
 export class ProjectsComponent implements OnInit {
   projectForm: FormGroup;
   skills = Object.values(Skill);
+  alertMessage: string | null = "";
 
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    
+
   ) {
     this.projectForm = this.fb.group({
       name: ['', Validators.required],
@@ -27,7 +34,9 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   get skillsFormArray() {
     return this.projectForm.get('skills') as FormArray;
@@ -42,20 +51,39 @@ export class ProjectsComponent implements OnInit {
       }
     });
   }
-
-  submitForm(result: number) {
+  
+  submitForm(projLeadId: number) {
     if (this.projectForm.valid) {
       const { name, description } = this.projectForm.value;
 
-      const selectedSkills = this.projectForm.value.skills
-        .map((checked: any, i: number) => checked ? this.skills[i] : null)
-        .filter((v: null) => v !== null);
+      forkJoin({
+        projNameExists: this.projectService.existsByName(name),
+        projLeaderExists: this.projectService.existsByLeader(projLeadId)
+      }).pipe(
+        switchMap(results => {
+          if (results.projNameExists) {
+            throw new Error('Project name already exists');
+          }
+          if (results.projLeaderExists) {
+            throw new Error('Project leader is already on a project.');
+          }
 
-      let newProject = new Project(name, description, selectedSkills, result)
+          const selectedSkills = this.projectForm.value.skills
+            .map((checked: any, i: number) => checked ? this.skills[i] : null)
+            .filter((v: null) => v !== null);
 
-      this.projectService.createProject(newProject).subscribe(
-        response => {
-          console.log('Project created:', response);
+          let newProject = new Project(name, description, selectedSkills, projLeadId)
+
+          return this.projectService.createProject(newProject);
+        }),
+        catchError(error => {
+          this.alertMessage = error.message;
+          throw new Error(error.message)
+        })
+      ).subscribe(
+        project => {
+          this.alertMessage = 'Project created!';
+          console.log('Project created', project)
         },
         error => {
           console.error('Error creating project:', error);
@@ -66,6 +94,10 @@ export class ProjectsComponent implements OnInit {
 
   onSubmit() {
     this.openAuthDialog();
+  }
+
+  onNavigate() {
+    this.router.navigate(['/project-list']);
   }
 }
 
