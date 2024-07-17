@@ -2,7 +2,7 @@ import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from "@angular
 import { inject } from "@angular/core"
 import { Observable, of } from "rxjs"
 import { EmployeeService } from "../services/employee/employee.service"
-import { Employee } from "../models/employee_model"
+import { Employee } from "../models/employee.model"
 
 export const EmployeeResolver: ResolveFn<any> = (
     route: ActivatedRouteSnapshot,
@@ -14,10 +14,11 @@ export const EmployeeResolver: ResolveFn<any> = (
         }else {
             const employee: Employee = {
                 id: 0,
-                employeeName: '',
-                employeeEmail: '',
-                projLead: false,
-                employeeSkills: '',
+                name: '',
+                password: '',
+                email: '',
+                ownProjectId: 0,
+                skills: [],
                 level: 0,
                 projects: []
               }
