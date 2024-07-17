@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectService } from '../services/project/project.service';
 import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
-import {Employee, Skill} from "../models/employee.model";
-import {Project} from "../models/project.model";
-import { Router } from '@angular/router';
+import { Employee, Skill } from "../models/employee.model";
+import { Project } from "../models/project.model";
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, forkJoin, switchMap } from 'rxjs';
 import { EmployeeService } from '../services/employee/employee.service';
 
@@ -18,13 +18,13 @@ export class ProjectsComponent implements OnInit {
   projectForm: FormGroup;
   skills = Object.values(Skill);
   alertMessage: string | null = "";
-
+  
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
     public dialog: MatDialog,
     private router: Router,
-    
+    private activatedRoute: ActivatedRoute
 
   ) {
     this.projectForm = this.fb.group({
@@ -35,10 +35,35 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.activatedRoute.params.subscribe(params => {
+      const projectId = params['id'];
+      if (projectId) {
+        this.projectService.getProjectById(projectId).subscribe(project => {
+          this.populateForm(project);
+        });
+      }
+    });
   }
 
-  get skillsFormArray() {
+  populateForm(project: Project): void {
+    this.projectForm.patchValue({
+      name: project.name,
+      description: project.description,
+      // Handle skills and other fields as necessary
+    });
+    const skillsArray = this.getskillsFormArray();
+    skillsArray.clear();
+
+    console.log(this.skills);
+    console.log(project.requiredSkills);
+    this.skills.forEach(skill => {
+      const hasSkill = project.requiredSkills.includes(skill);
+      // Push a new FormControl into the FormArray
+      skillsArray.push(this.fb.control(hasSkill));
+    });
+  }
+
+  getskillsFormArray() {
     return this.projectForm.get('skills') as FormArray;
   }
 
@@ -51,7 +76,7 @@ export class ProjectsComponent implements OnInit {
       }
     });
   }
-  
+
   submitForm(projLeadId: number) {
     if (this.projectForm.valid) {
       const { name, description } = this.projectForm.value;

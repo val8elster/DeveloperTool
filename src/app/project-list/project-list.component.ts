@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../services/project/project.service';
 import { Project } from '../models/project.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../services/employee/employee.service';
 
@@ -15,15 +15,20 @@ export class ProjectListComponent {
 
   dataSource: Project[] = [];
   displayedColumns: string[] = ['projectId', 'projectName', 'projLeadName', 'employees', 'description', 'reqSkills', 'edit', 'delete'];
-  employees : Employee[] = []; 
-  constructor(private projectService : ProjectService, private router: Router, private employeeService: EmployeeService){
+  employees : Employee[] = [];
+
+  constructor(private activatedRoute: ActivatedRoute, private projectService : ProjectService, private router: Router, private employeeService: EmployeeService){
     this.getProjects();
   }
 
   ngOnInit(): void {
+    this.fetchEmployees();
+  }
+
+  fetchEmployees() {
     this.employeeService.getEmployees().subscribe(employeeData => {
       this.employees = employeeData;
-    })
+    });
   }
 
   getProjects(): void {
@@ -46,6 +51,7 @@ export class ProjectListComponent {
   }
 
   updateProject(projectId: number): void {
+    console.log(projectId)
     this.router.navigate(['/projects', {id: projectId}])
   }
 
