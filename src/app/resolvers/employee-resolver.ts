@@ -20,7 +20,7 @@ export const EmployeeResolver: ResolveFn<any> = (
                 ownProjectId: 0,
                 skills: [],
                 level: 0,
-                projects: []
+                projectIds: []
               }
 
               return of(employee);

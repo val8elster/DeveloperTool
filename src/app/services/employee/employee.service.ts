@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, forkJoin, of, map} from 'rxjs';
+import {Observable, forkJoin, of, map, catchError} from 'rxjs';
 import {Employee, Skill} from '../../models/employee.model';
 import { Project } from 'src/app/models/project.model';
 
@@ -60,16 +60,16 @@ export class EmployeeService {
   public updateEmployee(employee: Employee, id: Number){
     return this.http.put<Employee>(`${this.baseUrl}/${id}`, employee);
   }
-  public updateEmployeeProjects(employees: Employee[], project: Project): Observable<Employee[]> {
-    // Map each update operation to an Observable
-    const updateOperations = employees.map((employee) => {
-      employee.projects.push(project);
-      return this.http.put<Employee>(`${this.baseUrl}/${employee.id}`, employee);
-    });
+  // public updateEmployeeProjects(employees: Employee[], project: Project): Observable<Employee[]> {
+  //   // Map each update operation to an Observable
+  //   const updateOperations = employees.map((employee) => {
+  //     employee.projects.push(project);
+  //     return this.http.put<Employee>(`${this.baseUrl}/${employee.id}`, employee);
+  //   });
 
-    // Use forkJoin to execute all operations simultaneously and wait for all to complete
-    return forkJoin(updateOperations);
-  }
+  //   // Use forkJoin to execute all operations simultaneously and wait for all to complete
+  //   return forkJoin(updateOperations);
+  // }
 
   getNextId(): Observable<number> {
     return this.getEmployees().pipe(

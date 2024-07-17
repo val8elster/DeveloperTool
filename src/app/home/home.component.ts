@@ -42,8 +42,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getEmployeeNames(employees: Employee[]): string {
-    return employees.map(employee => employee.name).join(', ');
+  getEmployeeNames(collaborators: Employee[]): string {
+    return collaborators.map(collaborator => collaborator.name).join(', ');
   }
   
   getLeaderNameById( leaderId: number): string {
@@ -60,8 +60,9 @@ export class HomeComponent implements OnInit {
 
   openAuthDialog(project: Project){
     const dialogRef = this.dialog.open(AuthDialogComponent, {
-      data: {project}
-    });
+      data: { project: project }
+    }
+    );
     console.log(project.id);
     dialogRef.afterClosed().subscribe( result => {
       if (result &&project.id !== undefined) {

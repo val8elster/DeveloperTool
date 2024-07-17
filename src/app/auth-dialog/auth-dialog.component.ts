@@ -13,7 +13,7 @@ import { Inject } from '@angular/core';
 export class AuthDialogComponent {
   authForm: FormGroup;
 
-  project: Project;
+  //project: Project;
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +26,7 @@ export class AuthDialogComponent {
       password: ['', Validators.required]
     });
 
-    this.project = data.project;
+    //this.project = data.project;
   }
 
   onAuthenticate() {

@@ -5,7 +5,7 @@ import { Project } from '../models/project.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../services/employee/employee.service';
-
+import { catchError, of } from 'rxjs';
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -26,8 +26,17 @@ export class ProjectListComponent {
   }
 
   fetchEmployees() {
-    this.employeeService.getEmployees().subscribe(employeeData => {
+    this.employeeService.getEmployees().pipe(
+      catchError(error => {
+        if (error.error && error.error.text) {
+          console.error('Raw response body:', error.error.text);
+        }
+        console.error('Error fetching employees:', error);
+        return of([]);
+      })
+    ).subscribe(employeeData => {
       this.employees = employeeData;
+      console.log('Fetched employees:', employeeData);
     });
   }
 
@@ -43,6 +52,10 @@ export class ProjectListComponent {
         }
       }
     )
+  }
+
+  getEmployeeNames(collaborators: Employee[]): string {
+    return collaborators.map(collaborator => collaborator.name).join(', ');
   }
 
   getLeaderNameById( leaderId: number): string {

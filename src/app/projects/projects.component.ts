@@ -48,17 +48,16 @@ export class ProjectsComponent implements OnInit {
   populateForm(project: Project): void {
     this.projectForm.patchValue({
       name: project.name,
-      description: project.description,
-      // Handle skills and other fields as necessary
+      description: project.description
     });
     const skillsArray = this.getskillsFormArray();
+    console.log(skillsArray)
     skillsArray.clear();
 
     console.log(this.skills);
     console.log(project.requiredSkills);
     this.skills.forEach(skill => {
       const hasSkill = project.requiredSkills.includes(skill);
-      // Push a new FormControl into the FormArray
       skillsArray.push(this.fb.control(hasSkill));
     });
   }

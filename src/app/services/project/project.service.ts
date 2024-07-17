@@ -53,7 +53,7 @@ export class ProjectService {
     return this.http.delete<void>(`${this.baseUrl}/delete/${projectId}`);
   }
 
-  addCollaborator(projectId: number, userId: number): Observable<boolean> {
-    return this.http.put<boolean>(`${this.baseUrl}/${projectId}/addcollab/${userId}`, {});
-  }
+  // hasCollaborator(projectId: number, employeeId: number) : Observable<void>{
+  //   return this.
+  // }
 }
