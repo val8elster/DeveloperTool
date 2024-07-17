@@ -1,63 +1,47 @@
 <div class="container">
-
     <div align="right">
-      <button mat-flat-button class="m-2" color="accent" routerLink="/employee-list">Developers List</button>
+      <button mat-flat-button class="m-2" routerLink="/employee-list" (click)="onNavigate()">Developers List</button>
     </div>
-
+    <h2>Sign Up</h2>
     <div class="card p-5 mt-2">
-        <form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
-        <p>
-            <mat-form-field appearance="outline">
-              <mat-label class="text">Name</mat-label>
-              <input matInput placeholder="Yur Moam" name="employeeName" [(ngModel)]="employee.employeeName">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-
-          <p>
-            <mat-form-field appearance="outline">
-              <mat-label class="text">Email</mat-label>
-              <input matInput placeholder="example@gmail.com" name="employeeEmail" [(ngModel)]="employee.employeeEmail">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-
-          <Label class="text">Project leader</Label>
-          <mat-radio-group aria-label="Project leader" name="projLead" [(ngModel)]="projLeadAsString">
-            <mat-radio-button   value='true'>Yes</mat-radio-button>
-            <mat-radio-button   value='false'>No</mat-radio-button>
-          </mat-radio-group>
-
-          <p>
-            <mat-form-field appearance="outline">
-              <mat-label class="text">employee Skills</mat-label>
-              <input matInput placeholder="employee Skills" name="employeeSkills" [(ngModel)]="employee.employeeSkills" disabled>
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-
-          <section class="section1">
-            <mat-checkbox (change)="onSkillsChanges($event)" value="Angular" class="example-margin" [checked]="checkSkills('Angular')">Angular</mat-checkbox>
-            <mat-checkbox (change)="onSkillsChanges($event)" value="React" class="example-margin" [checked]="checkSkills('React')">React</mat-checkbox>
-          </section>
-          <mat-divider></mat-divider>
-          <section class="section2">
-            <mat-checkbox (change)="onSkillsChanges($event)" value="Django" class="example-margin" [checked]="checkSkills('Django')">Django</mat-checkbox>
-            <mat-checkbox (change)="onSkillsChanges($event)" value="Spring Boot" class="example-margin" [checked]="checkSkills('Spring Boot')">Spring Boot</mat-checkbox>
-          </section>
-          <mat-divider></mat-divider>          
-          <section class="section2">
-            <mat-checkbox (change)="onSkillsChanges($event)" value="MySQL" class="example-margin" [checked]="checkSkills('MySQL')">MySQL</mat-checkbox>
-            <mat-checkbox (change)="onSkillsChanges($event)" value="MongoDB" class="example-margin" [checked]="checkSkills('MongoDB')">MongoDB</mat-checkbox>
-          </section>
-          <mat-divider></mat-divider>
-          <div class="text-center mt-3">
-            <button mat-flat-button class="m-2" color="accent">Save</button>
-            <button mat-stroked-button class="m-2" color="raised" (click)="onCancel()">Cancel</button>
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="grid-container">
+        <div>
+          <label for="name" class="label">Name:</label>
+          <input id="name" formControlName="name">
+          <div *ngIf="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched">
+            Name is required.
           </div>
+        </div>
 
-          
+        <div>
+          <label for="email" class="label">Email:</label>
+          <input id="email" formControlName="email">
+          <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
+            Enter a valid email.
+          </div>
+        </div>
 
-        </form>
+        <div>
+          <label for="password" class="label">Password:</label>
+          <input id="password" type="password" formControlName="password">
+          <div *ngIf="employeeForm.get('password')?.invalid && employeeForm.get('password')?.touched">
+            Password must be at least 6 characters long.
+          </div>
+        </div>
+
+        <div formArrayName="skills" class="skills-container">
+          <label class="label">Skills:</label>
+          <div *ngFor="let skill of skills; let i = index" class="skill">
+            <input type="checkbox" [formControlName]="i" id="skill{{i}}">
+            <label [for]="'skill' + i">{{ skill }}</label>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="employeeForm.invalid" class="register">Register</button>
+
+        <div *ngIf="alertMessage" class="alert">
+          {{ alertMessage }}
+        </div>
+      </form>
     </div>
 </div>

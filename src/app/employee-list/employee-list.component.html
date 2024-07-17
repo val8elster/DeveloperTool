@@ -1,73 +1,38 @@
+<div class="employee-list">
 
 <div class="all">
 <div class="container">
 
   <div align="right">
-    <button mat-flat-button class="m-2" color="accent" routerLink="/employee">Developer Form</button>
+    <button mat-flat-button class="m-2" color="primary" routerLink="/employee" (click)="onNavigate()">Sign Up</button>
   </div>
+  <h2>Developers</h2>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="tabhead">Name</mat-header-cell>
+        <mat-cell *matCellDef="let employee">{{ employee.name }}</mat-cell>
+      </ng-container>
 
-  <table mat-table [dataSource]="dataSourceEmp" class="mat-elevation-z8">
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="tabhead">Email</mat-header-cell>
+        <mat-cell *matCellDef="let employee">{{ employee.email }}</mat-cell>
+      </ng-container>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+      <ng-container matColumnDef="skills">
+        <mat-header-cell *matHeaderCellDef class="tabhead">Skills</mat-header-cell>
+        <mat-cell *matCellDef="let employee">
+          <ul>
+            <li *ngFor="let skill of employee.skills">{{ skill }}</li>
+          </ul>
+        </mat-cell>
+      </ng-container>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="employeeId">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="employeeName">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.employeeName}} </td>
-    </ng-container>
-
-    <!-- Address Column -->
-    <ng-container matColumnDef="projects">
-      <th mat-header-cell *matHeaderCellDef> Projects </th>
-      <td mat-cell *matCellDef="let element"> {{element.projects}} </td>
-    </ng-container>
-
-    <!-- Email Column -->
-    <ng-container matColumnDef="employeeEmail">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.employeeEmail}} </td>
-    </ng-container>
-
-    <!-- projLead Column -->
-    <ng-container matColumnDef="projLead">
-      <th mat-header-cell *matHeaderCellDef> Projejct Leader </th>
-      <td mat-cell *matCellDef="let element"> {{element.projLead}} </td>
-    </ng-container>
-
-    <!-- Skills Column -->
-    <ng-container matColumnDef="employeeSkills">
-      <th mat-header-cell *matHeaderCellDef> Skills </th>
-      <td mat-cell *matCellDef="let element"> {{element.employeeSkills}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let element"> 
-        <button mat-icon-button color="primary" aria-label="Example icon button with a menu icon" (click)="updateEmployees(element.id)">
-          <mat-icon>edit</mat-icon>
-      </button>    
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let element"> 
-        <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" (click)="deleteEmployees(element.id)">
-          <mat-icon>delete</mat-icon>
-      </button>    
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
 </div>
 </div>
