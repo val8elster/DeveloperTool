@@ -7,6 +7,8 @@ import { EmployeeService } from '../services/employee/employee.service';
 import { ProjectDescriptionDialogComponent } from '../project-description-dialog/project-description-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
+import { ThemeService } from '../services/theme.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,11 +21,10 @@ export class HomeComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private employeeService: EmployeeService,
-    private dialog: MatDialog
-  ) {
-    
-  }
-
+    private dialog: MatDialog, 
+    private themeService: ThemeService
+  ) {}
+  
   readonly panelOpenState = signal(false);
   ngOnInit() {
     this.fetchEmployees();
@@ -39,8 +40,20 @@ export class HomeComponent implements OnInit {
   fetchEmployees() {
     this.employeeService.getEmployees().subscribe(employeeData => {
       this.employees = employeeData;
+    }
+
+    this.themeService.loadTheme();
+    this.themeService.isLightTheme$.subscribe(isLight => {
+      if (isLight) {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+      } else {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+      }
     });
-  }
+  
+  
 
   getEmployeeNames(collaborators: Employee[]): string {
     return collaborators.map(collaborator => collaborator.name).join(', ');
@@ -115,6 +128,4 @@ export class HomeComponent implements OnInit {
     }
     return false;
   }
-
-
 }

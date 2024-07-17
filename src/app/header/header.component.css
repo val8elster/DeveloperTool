@@ -80,6 +80,12 @@ mat-toolbar {
 .switch input[type="range"]::-webkit-slider-thumb:checked {
   background: #4caf50;
 }
-
+body.dark-theme mat-toolbar{
+  background-color: var(--background-color);
+}
+body.dark-theme .header.container{
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
 
   

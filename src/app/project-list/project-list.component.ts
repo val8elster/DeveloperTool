@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from '../services/employee/employee.service';
 import { catchError, of } from 'rxjs';
+import { ThemeService } from '../services/theme.service';
+
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
