@@ -26,11 +26,11 @@ export class ProjectService {
   }
 
   existsByName(name: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/exists/${name}`);
+    return this.http.get<boolean>(`${this.baseUrl}/exists/name/${name}`);
   }
 
   existsByLeader(leaderId: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/exists/${leaderId}`);
+    return this.http.get<boolean>(`${this.baseUrl}/exists/leader/${leaderId}`);
   }
 
   isCompleted(projectId: number): Observable<boolean> {
@@ -46,14 +46,14 @@ export class ProjectService {
   }
 
   addEmployeeToProject(projectId: number, userId: number): Observable<Project> {
-    return this.http.post<Project>(`${this.baseUrl}/${projectId}/users/${userId}`, {});
+    return this.http.put<Project>(`${this.baseUrl}/${projectId}/users/${userId}`, {});
   }
 
   deleteProject(projectId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${projectId}`);
   }
 
-  addCollaborator(projectId: number, userId: number): Observable<boolean> {
-    return this.http.put<boolean>(`${this.baseUrl}/${projectId}/addcollab/${userId}`, {});
-  }
+  // hasCollaborator(projectId: number, employeeId: number) : Observable<void>{
+  //   return this.
+  // }
 }

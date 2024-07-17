@@ -8,7 +8,7 @@ export class Employee{
   level: number;
   ownProjectId: number;
   skills: Skill[];
-  projects: Project[];
+  projectIds: number[];
 
   constructor(name: string, email: string, password: string, skills: Skill[]) {
     this.name = name;
@@ -18,7 +18,7 @@ export class Employee{
 
     this.level = 0;
     this.ownProjectId = 0;
-    this.projects = [];
+    this.projectIds = [];
   }
 }
 

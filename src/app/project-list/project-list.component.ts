@@ -2,8 +2,12 @@ import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../services/project/project.service';
 import { Project } from '../models/project.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Employee } from '../models/employee.model';
+import { EmployeeService } from '../services/employee/employee.service';
+import { catchError, of } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
+
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -12,14 +16,30 @@ import { ThemeService } from '../services/theme.service';
 export class ProjectListComponent {
 
   dataSource: Project[] = [];
-  displayedColumns: string[] = ['projectId', 'projectName', 'projLeadName', 'employees', 'description', 'edit', 'delete'];
+  displayedColumns: string[] = ['projectId', 'projectName', 'projLeadName', 'employees', 'description', 'reqSkills', 'edit', 'delete'];
+  employees : Employee[] = [];
 
-  constructor(private projectService : ProjectService, private router: Router){
+  constructor(private activatedRoute: ActivatedRoute, private projectService : ProjectService, private router: Router, private employeeService: EmployeeService){
     this.getProjects();
   }
 
   ngOnInit(): void {
+    this.fetchEmployees();
+  }
 
+  fetchEmployees() {
+    this.employeeService.getEmployees().pipe(
+      catchError(error => {
+        if (error.error && error.error.text) {
+          console.error('Raw response body:', error.error.text);
+        }
+        console.error('Error fetching employees:', error);
+        return of([]);
+      })
+    ).subscribe(employeeData => {
+      this.employees = employeeData;
+      console.log('Fetched employees:', employeeData);
+    });
   }
 
   getProjects(): void {
@@ -36,7 +56,17 @@ export class ProjectListComponent {
     )
   }
 
+  getEmployeeNames(collaborators: Employee[]): string {
+    return collaborators.map(collaborator => collaborator.name).join(', ');
+  }
+
+  getLeaderNameById( leaderId: number): string {
+    const leader = this.employees.find(employee => employee.id === leaderId);
+    return leader ? leader.name : 'Leader Not Found';
+  }
+
   updateProject(projectId: number): void {
+    console.log(projectId)
     this.router.navigate(['/projects', {id: projectId}])
   }
 

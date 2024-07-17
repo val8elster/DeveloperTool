@@ -27,7 +27,7 @@
   max-height: none;
 }
 
-.project-name-label, .workers-label, .lead-label{
+.project-name-label, .workers-label, .lead-label, .description-label, .skills-label{
   grid-area: auto; /* Resets any specific grid-area assignment if needed */
   margin-right: 0px;
   margin-top: 20px;

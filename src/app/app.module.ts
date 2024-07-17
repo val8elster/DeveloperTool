@@ -31,6 +31,7 @@ import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ProjectService} from "./services/project/project.service";
 import {AuthService} from "./services/auth.service";
+import { ProjectDescriptionDialogComponent } from './project-description-dialog/project-description-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {AuthService} from "./services/auth.service";
     ProjectsComponent,
     EmployeeListComponent,
     ProjectListComponent,
-    AuthDialogComponent
+    AuthDialogComponent,
+    ProjectDescriptionDialogComponent
   ],
   imports: [
     BrowserModule,

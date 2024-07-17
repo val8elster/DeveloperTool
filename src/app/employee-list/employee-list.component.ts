@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { EmployeeService } from '../services/employee/employee.service';
 import { Employee } from '../models/employee.model';
 import {Router} from "@angular/router";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-employee-list',
@@ -12,15 +13,21 @@ import {Router} from "@angular/router";
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'skills'];
+  displayedColumns: string[] = ['id' ,'name', 'email', 'skills', 'edit', 'delete'];
   dataSource = new MatTableDataSource<Employee>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private employeeService: EmployeeService, private router: Router) {}
+  constructor(private employeeService: EmployeeService, private router: Router) {
+    this.getEmployees();
+  }
 
   ngOnInit(): void {
+    
+  }
+
+  getEmployees() : void {
     this.employeeService.getEmployees().subscribe(
       (data: Employee[]) => {
         this.dataSource.data = data;
@@ -29,6 +36,24 @@ export class EmployeeListComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching employees:', error);
+      }
+    );
+  }
+
+  updateEmployee(employeeId: number) : void {
+    this.router.navigate(['/employee', {id: employeeId}])
+  }
+
+  deleteEmployee(employeeId: number) : void{
+    this.employeeService.deleteEmployee(employeeId).subscribe(
+      {
+        next: (res) =>{
+          console.log(res);
+          this.getEmployees();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err)
+        }
       }
     );
   }

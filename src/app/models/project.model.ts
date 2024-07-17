@@ -14,7 +14,6 @@ export class Project {
     this.description = description;
     this.requiredSkills = skills;
     this.leaderId = leaderId;
-
     this.completed = false;
     this.collaborators = [];
 }
