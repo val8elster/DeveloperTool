@@ -1,47 +1,26 @@
-<div class="container">
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Project Name</mat-label>
+    <input matInput formControlName="name">
+    <mat-error *ngIf="projectForm.get('name')?.invalid && projectForm.get('name')?.touched">
+      Project name is required
+    </mat-error>
+  </mat-form-field>
 
-    <div align="right">
-      <button mat-flat-button class="m-2" color="accent" routerLink="/projects-list">Projects List</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+    <mat-error *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched">
+      Description is required
+    </mat-error>
+  </mat-form-field>
+
+  <div formArrayName="skills" class="skills-container">
+    <label>Skills</label>
+    <div *ngFor="let skill of skills; let i = index">
+      <mat-checkbox [formControlName]="i">{{ skill }}</mat-checkbox>
     </div>
+  </div>
 
-    <div class="card p-5 mt-2">
-
-        <form #projectForm="ngForm" (ngSubmit)="saveProject(projectForm)">
-        <p>
-            <mat-form-field appearance="outline">
-              <mat-label>Name</mat-label>
-              <input matInput placeholder="Demo Project" name="projectName" [(ngModel)]="project.projectName">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-
-          <p>
-            <mat-form-field appearance="outline">
-              <mat-label>Email</mat-label>
-              <input matInput placeholder="In this project our goal was.." name="projectDescription" [(ngModel)]="project.description">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
-          </p>
-          
-          <mat-form-field>
-            <mat-label>Project Leaders</mat-label>
-            <mat-select multiple [(value)]="project.projLeaders" (selectionChange)="onSelectionChangeProjLead($event)">
-              <mat-option *ngFor="let lead of projLeaders" [value]="lead">{{lead.employeeName}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Developers</mat-label>
-            <mat-select multiple [(value)]="project.employees">
-              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.employeeName}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div class="text-center mt-3">
-            <button mat-flat-button class="m-2" color="accent">Save</button>
-            <button mat-stroked-button class="m-2" color="raised" (click)="onCancel()">Cancel</button>
-          </div>
-        
-        </form>
-    </div>
-</div>
+  <button mat-raised-button color="primary" type="submit" [disabled]="projectForm.invalid">Create Project</button>
+</form>

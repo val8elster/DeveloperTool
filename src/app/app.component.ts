@@ -7,9 +7,10 @@ import { ThemeService } from './theme.service';
   styleUrls: ['./app.component.css'],
  
 })
+
 export class AppComponent implements OnInit {
 
-  title = 'IT-project-frontend';
+  title = 'Developer Tool';
 
   constructor(private themeService: ThemeService) {}
  
@@ -49,4 +50,3 @@ export class AppComponent implements OnInit {
 
   }
 }
-  
