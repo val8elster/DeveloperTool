@@ -26,15 +26,31 @@
       ],
       "description": "Project to achieve objectives A",
       "projLeaders": [
-        {
-          "id": 1,
-          "employeeName": "Worker A",
-          "employeeEmail": "workera@gmail.com",
-          "projLead": true,
-          "employeeSkills": "React,Django,MongoDB,Spring Boot",
-          "level": 0,
-          "projects": []
-        }
+        "Worker C"
+      ]
+    },
+    {
+      "id": 1,
+      "projectName": "Project B",
+      "projLeadName": "Worker C",
+      "employees": [
+        "Worker E"
+      ],
+      "description": "Project to achieve objectives B",
+      "projLeaders": [
+        "Worker C"
+      ]
+    },
+    {
+      "id": 1,
+      "projectName": "Project C",
+      "projLeadName": "Worker C",
+      "employees": [
+        "Worker B"
+      ],
+      "description": "Project to achieve objectives C",
+      "projLeaders": [
+        "Worker C"
       ]
     }
   ],
@@ -44,12 +60,18 @@
       "employeeName": "Worker A",
       "employeeEmail": "workera@gmail.com",
       "projLead": true,
-      "employeeSkills": "React,Django,MongoDB,Spring Boot",
-      "level": 0,
-      "projects": []
+      "employeeSkills": "React,Spring Boot,React,MongoDB"
     },
     {
-      "id": 2,
+      "id": "1",
+      "employeeName": "Worker E",
+      "employeeAddress": "0001, City, Street 6",
+      "employeeEmail": "workere@gmail.com",
+      "projLead": false,
+      "employeeSkills": "React,Django,MongoDB"
+    },
+    {
+      "id": 1,
       "employeeName": "Worker B",
       "employeeEmail": "workerb@gmail.com",
       "projLead": false,
