@@ -10,12 +10,12 @@ import { ProjectResolver } from './resolvers/projects-resolver';
 import { EmployeeResolver } from './resolvers/employee-resolver';
 
 const routes: Routes = [
-  {path: 'header', component: HeaderComponent},
-  {path: 'employee', component: EmployeeComponent, resolve: {employees: EmployeeResolver}},
-  {path: 'employee-list', component: EmployeeListComponent},
-  {path: 'projects', component: ProjectsComponent, resolve: {project: ProjectResolver} },
-  {path: 'projects-list', component: ProjectListComponent},
-  {path: '', component: HomeComponent}
+  { path: 'header', component: HeaderComponent },
+  { path: 'employee', component: EmployeeComponent, resolve: { employees: EmployeeResolver } },
+  { path: 'employee-list', component: EmployeeListComponent },
+  { path: 'projects', component: ProjectsComponent, resolve: { project: ProjectResolver } },
+  { path: 'project-list', component: ProjectListComponent },
+  { path: '', component: HomeComponent }
 ];
 
 @NgModule({

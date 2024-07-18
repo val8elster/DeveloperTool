@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { EmployeeService } from '../services/employee/employee.service';
-import { Employee } from '../models/employee_model';
+import { Employee } from '../models/employee.model';
+import {Router} from "@angular/router";
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { ProjectService } from '../services/project/project.service';
-import { Project } from '../models/project_model';
 
 @Component({
   selector: 'app-employee-list',
@@ -12,56 +13,57 @@ import { Project } from '../models/project_model';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
+  displayedColumns: string[] = ['id' ,'name', 'email', 'skills', 'edit', 'delete'];
+  dataSource = new MatTableDataSource<Employee>();
 
-  dataSourceEmp : Employee[] = [];
-  dataSourceProj : Project[] = [];
-  displayedColumns: string[] = ['employeeId', 'employeeName', 'projects', 'employeeEmail', 'projLead', 'employeeSkills', 'edit', 'delete'];
-  projects: Project[] = [];
-  constructor(private employeeService: EmployeeService, private router: Router, private projectService : ProjectService){
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(private employeeService: EmployeeService, private router: Router) {
     this.getEmployees();
-    
   }
 
   ngOnInit(): void {
     
   }
 
-  getProjectsForEmployee(employee: Employee) {
-    this.projectService.getProjects().subscribe((projects: any[]) => {
-      this.projects = projects.filter(project => project.employees.employee.id == employee.id);
-    });
-  }
-
-  getEmployees(): void{
+  getEmployees() : void {
     this.employeeService.getEmployees().subscribe(
-      {
-        next: (res: Employee[]) => {
-          this.dataSourceEmp = res;
-          console.log(res)
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log(err);
-        }
+      (data: Employee[]) => {
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        console.error('Error fetching employees:', error);
       }
     );
-  } 
+  }
 
-  deleteEmployees(employeeId: Number): void {
-    console.log(employeeId);
+  updateEmployee(employeeId: number) : void {
+    this.router.navigate(['/employee', {id: employeeId}])
+  }
+
+  deleteEmployee(employeeId: number) : void{
     this.employeeService.deleteEmployee(employeeId).subscribe(
       {
-        next: (res) => {
+        next: (res) =>{
           console.log(res);
           this.getEmployees();
         },
         error: (err: HttpErrorResponse) => {
-          console.log(err);
+          console.log(err)
         }
       }
     );
   }
 
-  updateEmployees(employeeId: Number): void {
-    this.router.navigate(['/employee', {id: employeeId}]);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onNavigate() {
+    this.router.navigate(['/employee']);
   }
 }

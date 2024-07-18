@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from '../models/project_model'
-import { NgForm } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ProjectService } from '../services/project/project.service';
+import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
+import { Employee, Skill } from "../models/employee.model";
+import { Project } from "../models/project.model";
 import { ActivatedRoute, Router } from '@angular/router';
-import { Employee } from '../models/employee_model';
+import { catchError, forkJoin, switchMap } from 'rxjs';
 import { EmployeeService } from '../services/employee/employee.service';
-import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-projects',
@@ -14,109 +15,113 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
+  projectForm: FormGroup;
+  skills = Object.values(Skill);
+  alertMessage: string | null = "";
+  
+  constructor(
+    private fb: FormBuilder,
+    private projectService: ProjectService,
+    public dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
 
-  isCreateProject: boolean = true;
-
-  project: any;
-
-  employees: Employee[] = [];
-  projLeaders: Employee[] = [];
-  projects: Project[] = [];
-  constructor(private projectService: ProjectService, private router: Router,
-    private employeeService: EmployeeService, private activatedRoute: ActivatedRoute) {
-
+  ) {
+    this.projectForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      skills: this.fb.array(this.skills.map(skill => this.fb.control(false)))
+    });
   }
 
   ngOnInit(): void {
-    this.getEmployees();
-    this.getProjects();
-    this.project = this.activatedRoute.snapshot.data['project'];
-
-    console.log(this.project)
-
-    if (this.project && this.project.id > 0) {
-      this.isCreateProject = false;
-    } else {
-      this.isCreateProject;
-    }
-  }
-
-  getLastId(): number {
-    return this.projects.length;
-    
-  }
-
-  getProjects(): void {
-    this.projectService.getProjects().subscribe(
-      {
-        next: (res: Project[]) => {
-          this.projects = res;
-          console.log(res)
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log(err)
-        }
+    this.activatedRoute.params.subscribe(params => {
+      const projectId = params['id'];
+      if (projectId) {
+        this.projectService.getProjectById(projectId).subscribe(project => {
+          this.populateForm(project);
+        });
       }
-    )
+    });
   }
 
-  getEmployees(): void {
-    this.employeeService.getEmployees().subscribe(
-      employees => {
-        this.employees = employees;
-        this.getProjLeaders();
-      },
-      error => console.error(error)
-    );
+  populateForm(project: Project): void {
+    this.projectForm.patchValue({
+      name: project.name,
+      description: project.description
+    });
+    const skillsArray = this.getskillsFormArray();
+    console.log(skillsArray)
+    skillsArray.clear();
+
+    console.log(this.skills);
+    console.log(project.requiredSkills);
+    this.skills.forEach(skill => {
+      const hasSkill = project.requiredSkills.includes(skill);
+      skillsArray.push(this.fb.control(hasSkill));
+    });
   }
 
-  getProjLeaders(): void {
-    this.projLeaders = this.employees.filter(employee => employee.projLead);
+  getskillsFormArray() {
+    return this.projectForm.get('skills') as FormArray;
   }
 
-  onCancel(): void {
-    this.router.navigate(['/']);
+  openAuthDialog() {
+    const dialogRef = this.dialog.open(AuthDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.submitForm(result);
+      }
+    });
   }
 
-  onSelectionChangeProjLead(event: MatSelectChange) {
-    // Assuming project.projLeadName should store a list of names, not just one
-    this.project.projLeadName = event.value.map((employee: Employee) => employee.employeeName).join(', ');
-  }
+  submitForm(projLeadId: number) {
+    if (this.projectForm.valid) {
+      const { name, description } = this.projectForm.value;
 
-  saveProject(projectForm: NgForm): void {
-    
-    if (this.isCreateProject) {
-      this.project.id = this.getLastId() + 1;
-
-      this.projectService.saveProject(this.project).subscribe(
-        {
-          next: (res: Project) => {
-            
-            console.log(res);
-            /*this.employeeService.updateEmployeeProjects(this.project.employees, this.project)*/
-            projectForm.reset();
-            this.employees = [];
-            this.projLeaders = [];
-            
-          },
-          error: (err: HttpErrorResponse) => {
-            console.log(err);
+      forkJoin({
+        projNameExists: this.projectService.existsByName(name),
+        projLeaderExists: this.projectService.existsByLeader(projLeadId)
+      }).pipe(
+        switchMap(results => {
+          if (results.projNameExists) {
+            throw new Error('Project name already exists');
           }
+          if (results.projLeaderExists) {
+            throw new Error('Project leader is already on a project.');
+          }
+
+          const selectedSkills = this.projectForm.value.skills
+            .map((checked: any, i: number) => checked ? this.skills[i] : null)
+            .filter((v: null) => v !== null);
+
+          let newProject = new Project(name, description, selectedSkills, projLeadId)
+
+          return this.projectService.createProject(newProject);
+        }),
+        catchError(error => {
+          this.alertMessage = error.message;
+          throw new Error(error.message)
+        })
+      ).subscribe(
+        project => {
+          this.alertMessage = 'Project created!';
+          console.log('Project created', project)
+        },
+        error => {
+          console.error('Error creating project:', error);
         }
       );
-    } else {
-        this.projectService.updateProject(this.project, this.project.id).subscribe(
-        {
-          next: (res: Project) => {
-            this.router.navigate(["/projects-list"]);
-          },
-          error: (err: HttpErrorResponse) => {
-            console.log(err);
-          }
-        }
-
-      )
     }
+  }
 
+  onSubmit() {
+    this.openAuthDialog();
+  }
+
+  onNavigate() {
+    this.router.navigate(['/project-list']);
   }
 }
+
