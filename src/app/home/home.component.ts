@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../services/project/project.service';
 import { Project } from '../models/project.model';
 import {signal} from '@angular/core';
-import { Employee } from '../models/employee_model';
+import { Employee } from '../models/employee.model';
 import { ThemeService } from '../services/theme.service';
 
 @Component({

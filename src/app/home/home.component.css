@@ -35,8 +35,16 @@
   margin-left: 20px;
   color: var(--text-color);
   font-weight: bold;
+  font-size: 13px; /* Set a specific font size */
+  
 }
-
+.lead {
+  font-size: 13px;  /* ID von developer kleiner */
+  padding: 10px;
+  margin: 5px;
+  width: auto;
+  height: auto;
+}
 .project-name, .workers, .lead { 
   color: var(--text-color);
 }

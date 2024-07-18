@@ -30,14 +30,14 @@ export class ThemeService {
     if (isLightTheme) {
       root.style.setProperty('--background-color', '#B5D7F5');
       root.style.setProperty('--box-color','#8A2BE2')
-      root.style.setProperty('--text-color', '#000000');
+      root.style.setProperty('--text-color', '#ffffff');
       root.style.setProperty('--highlight','#ffffff');
     } else {
         //darkmode
       root.style.setProperty('--background-color', '#131415');
       root.style.setProperty('--box-color', '#2B2C31')
       root.style.setProperty('--text-color', '#ffffff');
-      root.style.setProperty('--highlight','#4f4c4c' )
+      root.style.setProperty('--highlight','#ffffff' )
     }
   }
 }

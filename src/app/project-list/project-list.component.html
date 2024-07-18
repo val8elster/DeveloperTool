@@ -1,68 +1,152 @@
 <div class="all">
-<div class="container">  
-    <div align="right">
-        <button mat-flat-button class="m-2" color="accent" routerLink="/projects">Projects Form</button>
-    </div>
+  <div class="container project-list">
+    <div class="grid-container">
+      <div class="project-name-label">Project Name:</div>
+      <div class="project-name">Example Project</div>
+      <div class="workers-label">Workers:</div>
+      <div class="workers">10</div>
+      <div class="lead-label">Lead:</div>
+      <div class="lead">John Doe</div>
+      <div class="description">
+        <div align="right">
+          <button mat-flat-button class="m-2" color="accent" routerLink="/projects">Projects Form</button>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- ID Column -->
+          <ng-container matColumnDef="projectId">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-    
-      <!-- ID Column -->
-      <ng-container matColumnDef="projectId">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-    
-      <!-- Name Column -->
-      <ng-container matColumnDef="projectName">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
-      </ng-container>
-    
-      <!-- Address Column -->
-      <ng-container matColumnDef="projLeadName">
-        <th mat-header-cell *matHeaderCellDef> Project Leader Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.projLeadName}} </td>
-      </ng-container>
-    
-      <!-- Email Column -->
-      <ng-container matColumnDef="employees">
-        <th mat-header-cell *matHeaderCellDef> Developers </th>
-        <td mat-cell *matCellDef="let element"> {{element.employees}} </td>
-      </ng-container>
-  
-      <!-- projLead Column -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Project Description </th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-      </ng-container>
-      
-      <!-- projLead Column -->
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element"> 
-            <button mat-icon-button color="primary" aria-label="Example icon button with a menu icon" (click)="updateProject(element.id)">
+          <!-- Name Column -->
+          <ng-container matColumnDef="projectName">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
+          </ng-container>
+
+          <!-- Project Leader Name Column -->
+          <ng-container matColumnDef="projLeadName">
+            <th mat-header-cell *matHeaderCellDef> Project Leader Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.projLeadName}} </td>
+          </ng-container>
+
+          <!-- Developers Column -->
+          <ng-container matColumnDef="employees">
+            <th mat-header-cell *matHeaderCellDef> Developers </th>
+            <td mat-cell *matCellDef="let element"> {{element.employees}} </td>
+          </ng-container>
+
+          <!-- Description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Project Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+          <!-- Edit Column -->
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-icon-button color="primary" aria-label="Example icon button with a menu icon" (click)="updateProject(element.id)">
                 <mat-icon>edit</mat-icon>
-            </button>    
-        </td>
-      </ng-container>
+              </button>    
+            </td>
+          </ng-container>
 
-      <!-- projLead Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element"> 
-            <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" (click)="deleteProject(element.id)">
+          <!-- Delete Column -->
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon" (click)="deleteProject(element.id)">
                 <mat-icon>delete</mat-icon>
-            </button>    
-        </td>
-      </ng-container>
-    
-     
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+              </button>    
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <!-- New Skills Section -->
+      <div formarrayname="skills" class="skills-container ng-untouched ng-pristine ng-valid" ng-reflect-name="skills">
+        <label>Skills</label>
+        <div class="ng-star-inserted">
+          <mat-checkbox class="mat-mdc-checkbox mat-accent ng-untouched ng-pristine ng-valid" ng-reflect-name="0" id="mat-mdc-checkbox-7">
+            <div class="mdc-form-field">
+              <div class="mdc-checkbox">
+                <div class="mat-mdc-checkbox-touch-target"></div>
+                <input type="checkbox" class="mdc-checkbox__native-control" id="mat-mdc-checkbox-7-input" tabindex="0">
+                <div class="mdc-checkbox__ripple"></div>
+                <div class="mdc-checkbox__background">
+                  <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" class="mdc-checkbox__checkmark">
+                    <path fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" class="mdc-checkbox__checkmark-path"></path>
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div mat-ripple="" class="mat-ripple mat-mdc-checkbox-ripple mat-mdc-focus-indicator" ng-reflect-trigger="[object HTMLDivElement]" ng-reflect-disabled="false" ng-reflect-centered="true"></div>
+              </div>
+              <label class="mdc-label" for="mat-mdc-checkbox-7-input">JAVA</label>
+            </div>
+          </mat-checkbox>
+        </div>
+        <div class="ng-star-inserted">
+          <mat-checkbox class="mat-mdc-checkbox mat-accent ng-untouched ng-pristine ng-valid" ng-reflect-name="1" id="mat-mdc-checkbox-8">
+            <div class="mdc-form-field">
+              <div class="mdc-checkbox">
+                <div class="mat-mdc-checkbox-touch-target"></div>
+                <input type="checkbox" class="mdc-checkbox__native-control" id="mat-mdc-checkbox-8-input" tabindex="0">
+                <div class="mdc-checkbox__ripple"></div>
+                <div class="mdc-checkbox__background">
+                  <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" class="mdc-checkbox__checkmark">
+                    <path fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" class="mdc-checkbox__checkmark-path"></path>
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div mat-ripple="" class="mat-ripple mat-mdc-checkbox-ripple mat-mdc-focus-indicator" ng-reflect-trigger="[object HTMLDivElement]" ng-reflect-disabled="false" ng-reflect-centered="true"></div>
+              </div>
+              <label class="mdc-label" for="mat-mdc-checkbox-8-input">KOTLIN</label>
+            </div>
+          </mat-checkbox>
+        </div>
+        <div class="ng-star-inserted">
+          <mat-checkbox class="mat-mdc-checkbox mat-accent ng-untouched ng-pristine ng-valid" ng-reflect-name="2" id="mat-mdc-checkbox-9">
+            <div class="mdc-form-field">
+              <div class="mdc-checkbox">
+                <div class="mat-mdc-checkbox-touch-target"></div>
+                <input type="checkbox" class="mdc-checkbox__native-control" id="mat-mdc-checkbox-9-input" tabindex="0">
+                <div class="mdc-checkbox__ripple"></div>
+                <div class="mdc-checkbox__background">
+                  <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" class="mdc-checkbox__checkmark">
+                    <path fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" class="mdc-checkbox__checkmark-path"></path>
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div mat-ripple="" class="mat-ripple mat-mdc-checkbox-ripple mat-mdc-focus-indicator" ng-reflect-trigger="[object HTMLDivElement]" ng-reflect-disabled="false" ng-reflect-centered="true"></div>
+              </div>
+              <label class="mdc-label" for="mat-mdc-checkbox-9-input">PYTHON</label>
+            </div>
+          </mat-checkbox>
+        </div>
+        <div class="ng-star-inserted">
+          <mat-checkbox class="mat-mdc-checkbox mat-accent ng-untouched ng-pristine ng-valid" ng-reflect-name="3" id="mat-mdc-checkbox-10">
+            <div class="mdc-form-field">
+              <div class="mdc-checkbox">
+                <div class="mat-mdc-checkbox-touch-target"></div>
+                <input type="checkbox" class="mdc-checkbox__native-control" id="mat-mdc-checkbox-10-input" tabindex="0">
+                <div class="mdc-checkbox__ripple"></div>
+                <div class="mdc-checkbox__background">
+                  <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true" class="mdc-checkbox__checkmark">
+                    <path fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" class="mdc-checkbox__checkmark-path"></path>
+                  </svg>
+                  <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div mat-ripple="" class="mat-ripple mat-mdc-checkbox-ripple mat-mdc-focus-indicator" ng-reflect-trigger="[object HTMLDivElement]" ng-reflect-disabled="false" ng-reflect-centered="true"></div>
+              </div>
+              <label class="mdc-label" for="mat-mdc-checkbox-10-input">ANGULAR</label>
+            </div>
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -116,10 +116,11 @@ button {
 button:hover {
   background-color: #512da8;
   transform: scale(1.01);
-
+}
+/*  blaue container um sign up brauchen wir es? 
 .container{
     background-color: var(--background-color);
-}
+} */
 
 body.dark-theme .container{
     background-color: var(--background-color);

@@ -3,54 +3,85 @@
 :root {
   --box-color: #8A2BE2;
   --background-color: #B5D7F5;
-  --text-color: black;
+  --text-color: white;
   --highlight: white;
 }
-.dark-theme{
+
+.dark-theme {
   --background-color: #131415;
   --box-color: #2B2C31;
   --text-color: white;
   --highlight: #4f4c4c;
 }
 
-html, body {
-    height: 100%;
-    background-color: var(--background-color);
-  }
-  
-  body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    color:var(--text-color);
-  }
-  
-  /* Global box-sizing */
-  * {
-    box-sizing: border-box;
-  }
-  
-  html, body {
-    height: 100%;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Set the overall container to use flexbox */
-  app-root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensure the container takes the full viewport height */
-  }
-  
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
 
-  
-  /* Styles für Dark Mode */
-  body.dark-theme {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-  
-  
+/* Global box-sizing */
+* {
+  box-sizing: border-box;
+}
+
+/* Set the overall container to use flexbox */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the container takes the full viewport height */
+}
+
+/* Styles for skills container */
+.skills-container {
+  background-color: var(--box-color);
+  color: var(--text-color);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Checkbox labels */
+.skills-container .mdc-label {
+  color: var(--text-color);
+}
+
+/* Checkbox background and border color */
+.skills-container .mdc-checkbox__background {
+  background-color: var(--box-color);
+  border-color: var(--text-color);
+}
+
+/* Checkbox checkmark color */
+.skills-container .mdc-checkbox__checkmark-path {
+  stroke: var(--text-color);
+}
+
+/* Dark theme styles */
+body.dark-theme {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/*  skills container hell grau */
+body.dark-theme .skills-container {
+  background-color:--box-color;
+  color: var(--text-color);
+}
+
+/* Dark theme styles for checkbox labels */
+body.dark-theme .skills-container .mdc-label {
+  color: var(--text-color);
+}
+
+/* Dark theme styles for checkbox background and border color */
+body.dark-theme .skills-container .mdc-checkbox__background {
+  background-color: var(--background-color);
+  border-color: white; /* Outline the checkbox border in white */
+}
+
+/* Dark theme styles for checkbox checkmark color */
+body.dark-theme .skills-container .mdc-checkbox__checkmark-path {
+  stroke: white; /* Set the checkmark color to white */
+}
+
