@@ -65,6 +65,7 @@ export class ProjectListComponent {
     return leader ? leader.name : 'Leader Not Found';
   }
 
+  //tag to recognize it in project components
   updateProject(projectId: number): void {
     this.router.navigate(['/projects', {id: projectId}], { state: { isUpdate: true } });
   }

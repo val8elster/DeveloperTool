@@ -19,6 +19,7 @@ export class ProjectsComponent implements OnInit {
   projectForm: FormGroup;
   skills = Object.values(Skill);
   alertMessage: string | null = "";
+  //to store tags coming from project list when update
   isUpdate: boolean = false;
   projectId: number | null = null;
 
@@ -40,9 +41,11 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     
     this.activatedRoute.params.subscribe(params => {
+      //storing tags from project list when update
       this.projectId = params['id'];
       this.isUpdate = history.state.isUpdate;
       console.log(this.isUpdate);
+      //populating project if update was clicked in project list
       if (this.projectId) {
         this.projectService.getProjectById(this.projectId).subscribe(project => {
           this.populateForm(project);
@@ -104,6 +107,7 @@ export class ProjectsComponent implements OnInit {
 
           let newProject = new Project(name, description, selectedSkills, projLeadId)
 
+          //if state is update and projectId is not null it updates the project, otherwise it creates new project
           if(this.isUpdate && this.projectId){
             return this.projectService.updateProject(this.projectId, newProject);
           }else{
