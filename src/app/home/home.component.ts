@@ -29,6 +29,16 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.fetchEmployees();
     this.fetchProjects();
+    this.themeService.loadTheme();
+    this.themeService.isLightTheme$.subscribe(isLight => {
+      if (isLight) {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+      } else {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+      }
+    });
   }
 
   fetchProjects() {
@@ -40,18 +50,9 @@ export class HomeComponent implements OnInit {
   fetchEmployees() {
     this.employeeService.getEmployees().subscribe(employeeData => {
       this.employees = employeeData;
-    }
-
-    this.themeService.loadTheme();
-    this.themeService.isLightTheme$.subscribe(isLight => {
-      if (isLight) {
-        document.body.classList.add('light-theme');
-        document.body.classList.remove('dark-theme');
-      } else {
-        document.body.classList.add('dark-theme');
-        document.body.classList.remove('light-theme');
-      }
     });
+  }
+    
   
   
 

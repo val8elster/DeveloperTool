@@ -115,7 +115,7 @@ button {
 
 button:hover {
   background-color: #512da8;
-  transform: scale(1.01);
+  transform: scale(1.01);}
 
 .container{
     background-color: var(--background-color);
