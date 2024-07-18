@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Authenticate</h1>
+<div mat-dialog-content>
+  <form [formGroup]="authForm">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onAuthenticate()">Authenticate</button>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+</div>

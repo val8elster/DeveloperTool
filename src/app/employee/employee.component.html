@@ -1,0 +1,47 @@
+<div class="container">
+    <div align="right">
+      <button mat-flat-button class="m-2" routerLink="/employee-list" (click)="onNavigate()">Developers List</button>
+    </div>
+    <h2>Sign Up</h2>
+    <div class="card p-5 mt-2">
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="grid-container">
+        <div>
+          <label for="name" class="label">Name:</label>
+          <input id="name" formControlName="name">
+          <div *ngIf="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched">
+            Name is required.
+          </div>
+        </div>
+
+        <div>
+          <label for="email" class="label">Email:</label>
+          <input id="email" formControlName="email">
+          <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
+            Enter a valid email.
+          </div>
+        </div>
+
+        <div>
+          <label for="password" class="label">Password:</label>
+          <input id="password" type="password" formControlName="password">
+          <div *ngIf="employeeForm.get('password')?.invalid && employeeForm.get('password')?.touched">
+            Password must be at least 6 characters long.
+          </div>
+        </div>
+
+        <div formArrayName="skills" class="skills-container">
+          <label class="label">Skills:</label>
+          <div *ngFor="let skill of skills; let i = index" class="skill">
+            <input type="checkbox" [formControlName]="i" id="skill{{i}}">
+            <label [for]="'skill' + i">{{ skill }}</label>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="employeeForm.invalid" class="register">Register</button>
+
+        <div *ngIf="alertMessage" class="alert">
+          {{ alertMessage }}
+        </div>
+      </form>
+    </div>
+</div>

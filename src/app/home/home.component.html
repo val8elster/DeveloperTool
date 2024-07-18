@@ -1,0 +1,21 @@
+
+<div class="container">
+    <mat-grid-list cols="2" rowHeight="1:1" gutterSize="50">
+        <mat-grid-tile *ngFor="let project of projects">
+            <div class="grid-container">
+                <div class="project-name-label">Project Name:</div>
+                <div class="project-name">{{ project.name }}</div>
+                <div class="workers-label">Workers:</div>
+                <div class="workers">{{ getEmployeeNames(project.collaborators) }}</div>
+                <div class="lead-label">Project Leader:</div>
+                <div class="lead">{{ getLeaderNameById(project.leaderId) }}</div>
+                <div class="skills-label">Required Skills:</div>
+                <div class="skills">{{project.requiredSkills}}</div>
+                <button mat-raised-button color="accent" (click)="openDescriptionDialog(project.description)">Description</button>
+                <div align="right">
+                  <button mat-raised-button color="accent" (click)="openAuthDialog(project)">Join Project</button>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

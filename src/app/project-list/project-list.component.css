@@ -1,0 +1,22 @@
+.all{
+    background-color:var(--background-color);
+    min-height: 100vh;
+}
+.container{
+    background-color: var(--box-color);
+}
+.mat-elevation-z8{
+    background-color: var(--highlight);
+    color: var(--text-color);
+}
+body.dark-theme .container{
+    background-color: var(--box-color);
+}
+body.dark-theme .all{
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+body.dark-theme .mat-elevation-z8{
+    background-color: var(--highlight);
+    color: var(--text-color);
+}

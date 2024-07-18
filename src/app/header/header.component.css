@@ -1,0 +1,91 @@
+/* General toolbar styling */
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color:white;
+    background-color: black;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Style for the left-side icons and menu */
+  .example-icon {
+    margin-right: 16px;
+  }
+  
+  /* Spacer to push the right-side icons to the end */
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* Style for the right-side icons */
+  .favorite-icon {
+    color: red; /* Example color, you can change this */
+  }
+  
+  .favorite-icon, .example-icon {
+    margin-left: 8px;
+  }
+  slider-container {
+
+    display: inline-block;
+
+    vertical-align: middle;
+
+    width: 40px;
+
+    text-align: left;
+
+}
+
+.slider {
+
+    width: 50%;
+
+}
+.theme-switcher {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.switch input[type="range"] {
+  
+  width: 50px;
+  height: 25px;
+  background: #ddd;
+  border-radius: 25px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.switch input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+  transition:  0.3s;
+}
+
+.switch input[type="range"]:checked {
+  background: #4caf50;
+}
+
+.switch input[type="range"]::-webkit-slider-thumb:checked {
+  background: #4caf50;
+}
+body.dark-theme mat-toolbar{
+  background-color: var(--background-color);
+}
+body.dark-theme .header.container{
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+  

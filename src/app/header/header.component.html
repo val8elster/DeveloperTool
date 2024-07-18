@@ -1,0 +1,19 @@
+<p>
+  <mat-toolbar color="primary" class="header.container" >
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['']">Home</button>
+        <button mat-menu-item [routerLink]="['/employee-list']">Developers</button>
+        <button mat-menu-item [routerLink]="['/project-list']">Projects</button>
+        <!--/mat-menu>/<button mat-menu-item []-->
+      </mat-menu>
+    <span>Developer Tool</span>
+    <span class="example-spacer"></span>
+
+    <div class="slider-container">
+      <input type="range" min="0" max="1" step="1" [value]="isLightTheme ? 1 : 0" class="slider" id="myRange" (change)="onThemeSwitchChange($event)">
+    </div>
+
+  </mat-toolbar></p>
