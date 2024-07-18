@@ -1,3 +1,4 @@
+<div class="all">
 <h1 mat-dialog-title>Authenticate</h1>
 <div mat-dialog-content>
   <form [formGroup]="authForm">
@@ -12,6 +13,7 @@
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onAuthenticate()">Authenticate</button>
-  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button class="button" color="accent" mat-button (click)="onAuthenticate()">Authenticate</button>
+  <button class="button" color="accent" mat-button (click)="dialogRef.close()">Cancel</button>
+</div>
 </div>

@@ -53,6 +53,8 @@
 .workers { grid-area: 2 / 2 / 3 / 3; }
 .lead { grid-area: 3 / 2 / 4 / 3; }
 
+.all{background-color: var(--background-color);}
+
 body.dark-theme .grid-container{
   background-color: var(--background-color);
 }
