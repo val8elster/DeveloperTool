@@ -1,0 +1,12 @@
+.all{
+    background-color:var(--background-color);
+}
+.title{
+    color: var(--text-color);
+}
+body.dark-theme title{
+    color:var(--text-color);
+}
+body.dark-theme .all{
+    background-color: var(--background-color);
+}
