@@ -10,8 +10,8 @@ import { Project } from 'src/app/models/project.model';
 export class EmployeeService {
 
   constructor(private http: HttpClient) {}
-  baseUrl = "http://localhost:8788/employee"
-  //baseUrl = "https://elster.dev:8788/employee"
+  //baseUrl = "http://localhost:8788/employee"
+  baseUrl = "https://elster.dev:8788/employee"
 
   getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(`${this.baseUrl}`);

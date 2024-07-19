@@ -8,8 +8,8 @@ import {Employee, Skill} from '../../models/employee.model';
   providedIn: 'root'
 })
 export class ProjectService {
-  private baseUrl = 'http://localhost:8788/projects';
-  //private baseUrl = 'https://elster.dev:8788/projects';
+  //private baseUrl = 'http://localhost:8788/projects';
+  private baseUrl = 'https://elster.dev:8788/projects';
 
   constructor(private http: HttpClient) {}
 
@@ -51,6 +51,10 @@ export class ProjectService {
 
   deleteProject(projectId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${projectId}`);
+  }
+
+  setCompleted(projectId: number | undefined): Observable<void>{
+    return this.http.put<void>(`${this.baseUrl}/${projectId}/complete`, {});
   }
 
   // hasCollaborator(projectId: number, employeeId: number) : Observable<void>{

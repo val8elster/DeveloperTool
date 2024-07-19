@@ -8,8 +8,8 @@ import {Employee} from "../models/employee.model";
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8788/employee';
-  //private baseUrl = 'https://elster.dev:8788/employee';
+  //private baseUrl = 'http://localhost:8788/employee';
+  private baseUrl = 'https://elster.dev:8788/employee';
 
   constructor(private http: HttpClient) {}
 
