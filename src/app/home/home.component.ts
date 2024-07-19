@@ -37,5 +37,6 @@ export class HomeComponent implements OnInit {
   getEmployeeNames(employees: Employee[]): string {
     return employees.map(employee => employee.name).join(', ');
   }
+  
 
 }
